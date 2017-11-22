@@ -52,9 +52,9 @@ public class Interface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 750, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(3, 0, 0, 0));
+		frame.getContentPane().setLayout(new GridLayout(3, 0, 5, 2));
 		
 		JPanel pathPanel = new JPanel();
 		frame.getContentPane().add(pathPanel);
@@ -95,10 +95,10 @@ public class Interface {
 		
 		JPanel manualPanel = new JPanel();
 		frame.getContentPane().add(manualPanel);
-		manualPanel.setLayout(new BorderLayout(0, 0));
+		manualPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel manResultsPanel = new JPanel();
-		manualPanel.add(manResultsPanel, BorderLayout.WEST);
+		manualPanel.add(manResultsPanel);
 		manResultsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel mFalsePosLabel = new JLabel("FP:");
@@ -124,8 +124,8 @@ public class Interface {
 		mFalseNegField.setColumns(10);
 		
 		JPanel manRulesPanel = new JPanel();
-		manualPanel.add(manRulesPanel, BorderLayout.CENTER);
-		manRulesPanel.setLayout(new GridLayout(0, 2, 1, 0));
+		manualPanel.add(manRulesPanel);
+		manRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		JTextArea mRulesTextArea = new JTextArea();
 		mRulesTextArea.setEditable(false);
@@ -135,7 +135,7 @@ public class Interface {
 		manRulesPanel.add(mWeightTextArea);
 		
 		JPanel manButtonsPanel = new JPanel();
-		manualPanel.add(manButtonsPanel, BorderLayout.EAST);
+		manualPanel.add(manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		JButton testButton = new JButton("Test");
@@ -146,10 +146,10 @@ public class Interface {
 		
 		JPanel autoPanel = new JPanel();
 		frame.getContentPane().add(autoPanel);
-		autoPanel.setLayout(new BorderLayout(0, 0));
+		autoPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel autoResultsPanel = new JPanel();
-		autoPanel.add(autoResultsPanel, BorderLayout.WEST);
+		autoPanel.add(autoResultsPanel);
 		autoResultsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel aFalsePositiveLabel = new JLabel("FP:");
@@ -175,8 +175,8 @@ public class Interface {
 		aFalseNegativeField.setColumns(10);
 		
 		JPanel autoRulesPanel = new JPanel();
-		autoPanel.add(autoRulesPanel, BorderLayout.CENTER);
-		autoRulesPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		autoPanel.add(autoRulesPanel);
+		autoRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		JTextArea aRulesTextArea = new JTextArea();
 		aRulesTextArea.setEditable(false);
@@ -187,7 +187,7 @@ public class Interface {
 		autoRulesPanel.add(aWeightTextArea);
 		
 		JPanel autoButtonsPanel = new JPanel();
-		autoPanel.add(autoButtonsPanel, BorderLayout.EAST);
+		autoPanel.add(autoButtonsPanel);
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		JButton generateButton = new JButton("Generate");
