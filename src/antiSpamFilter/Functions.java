@@ -106,9 +106,42 @@ public class Functions {
 			}
 		}	
 		sc.close();
-		System.out.println(new_rules);
+		// System.out.println(new_rules);
 		return total;
 	}
+	
+//	public static int evaluate2(){
+//		int total = 0;
+//		int new_rules = 0;
+//
+//		Scanner sc = new Scanner(new File(path));
+//		String line;
+//		double sum = 0.0;
+//
+//		while (sc.hasNextLine()) {
+//			line = sc.nextLine();
+//			String [] temp = line.split("	| ");	
+//			sum = 0;			
+//			for (int i = 1; i < temp.length; i++) {
+//				int index = rules.indexOf(temp[i]);
+//				if (index==-1){		
+//					new_rules++;
+//				}else{
+//					sum += solution.get(index);
+//				}
+//			}
+//			if (type == 0){ 
+//				if (sum > 5.0) // FP
+//					total++;
+//			}else{ 
+//				if (sum < 5.0) // FN
+//					total++;			
+//			}
+//		}	
+//		sc.close();
+//		// System.out.println(new_rules);
+//		return total;
+//	}
 
 	/**
 	 * Returns an array with the rules inside rules.cf
@@ -121,12 +154,10 @@ public class Functions {
 		ArrayList<String> rules = new ArrayList<String>();	
 		Scanner sc = new Scanner(new File(path));
 		String line;
-		int count = 0;
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
 			String [] temp = line.split(" ");
 			rules.add(temp[0]);	
-			count++;
 		}
 		sc.close();		
 		return rules;
@@ -159,5 +190,6 @@ public class Functions {
 		//write_weights("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", generate_solution(335));
 		//		System.out.println(evaluate(0, get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf")
 		//				,generate_solution(335),"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log"));
+		get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf");
 	}
 }
