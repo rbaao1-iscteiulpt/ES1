@@ -110,38 +110,65 @@ public class Functions {
 		return total;
 	}
 	
-//	public static int evaluate2(){
-//		int total = 0;
-//		int new_rules = 0;
-//
-//		Scanner sc = new Scanner(new File(path));
-//		String line;
-//		double sum = 0.0;
-//
-//		while (sc.hasNextLine()) {
-//			line = sc.nextLine();
-//			String [] temp = line.split("	| ");	
-//			sum = 0;			
-//			for (int i = 1; i < temp.length; i++) {
-//				int index = rules.indexOf(temp[i]);
-//				if (index==-1){		
-//					new_rules++;
-//				}else{
-//					sum += solution.get(index);
-//				}
-//			}
-//			if (type == 0){ 
-//				if (sum > 5.0) // FP
-//					total++;
-//			}else{ 
-//				if (sum < 5.0) // FN
-//					total++;			
-//			}
-//		}	
-//		sc.close();
-//		// System.out.println(new_rules);
-//		return total;
-//	}
+	/**
+	 * Evaluates the solution returning the total of FP or FN
+	 * 
+	 * @param type 0 for FP, 1 for FN
+	 * @param rules
+	 * @param solution
+	 * @param result of file_to_array() on ham.log or spam.log
+	 * @return total of FP or FN
+	 */
+	public static int evaluate2(int type, ArrayList<String> rules, ArrayList<Double> solution, ArrayList<ArrayList<String>> result){
+		int total = 0;
+		for (ArrayList<String> line : result) {
+			double sum = 0.0;
+			
+			for (String rule : line) {
+				int index = rules.indexOf(rule);
+
+				if (index!=-1){		
+					sum += solution.get(index);
+				}		
+			}
+
+			if (type == 0){ 
+				if (sum > 5.0) // FP
+					total++;
+			}else{ 
+				if (sum < 5.0) // FN
+					total++;			
+			}	
+		}
+		return total;
+	}
+
+	/**
+	 * <p> Converts ham.log/spam.log to an array. 
+	 * <p> Each position corresponds to an email. Each position then has another array that contains the rules the
+	 *  email breaks.  
+	 * 
+	 * @param path to ham.log or spam.log
+	 * @return array with an array of strings in each position
+	 * @throws FileNotFoundException
+	 */
+	public static ArrayList<ArrayList<String>> file_to_array(String path) throws FileNotFoundException{
+		ArrayList<ArrayList<String>> result = new ArrayList<>();
+		Scanner sc = new Scanner(new File(path));
+		String line;
+
+		while (sc.hasNextLine()) {
+			line = sc.nextLine();
+			String [] temp = line.split("	| ");
+			ArrayList<String> rules_per_line = new ArrayList<>();
+			for (int i = 1; i < temp.length; i++) {
+				rules_per_line.add(temp[i]);				
+			}
+			result.add(rules_per_line);		
+		}	
+		sc.close();		
+		return result;
+	}
 
 	/**
 	 * Returns an array with the rules inside rules.cf
@@ -179,8 +206,7 @@ public class Functions {
 		for (int i = 0; i < nRules; i++) {
 			d = r.nextDouble()*10.0-5.0;
 			solutions.add(d);
-		}
-
+		}		
 		return solutions;
 	}
 
@@ -190,6 +216,9 @@ public class Functions {
 		//write_weights("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", generate_solution(335));
 		//		System.out.println(evaluate(0, get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf")
 		//				,generate_solution(335),"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log"));
-		get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf");
+		//get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf");
+//		ArrayList<ArrayList<String>> x = file_to_array("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log");
+//		ArrayList<String> rules = get_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf");
+//		evaluate2(0, rules, generate_solution(21),x);
 	}
 }

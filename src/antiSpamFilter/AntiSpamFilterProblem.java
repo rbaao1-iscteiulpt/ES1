@@ -9,11 +9,13 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
-	static int nRules = 21;
-	static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
-	static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
-	static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
-	ArrayList<String> rules;
+	static int nRules = 335;
+	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
+	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
+	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
+	private ArrayList<String> rules;
+	private ArrayList<ArrayList<String>> ham_result;
+	private ArrayList<ArrayList<String>> spam_result;
 
 	public AntiSpamFilterProblem() {
 		this(nRules);
@@ -23,9 +25,12 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 		try {
 			rules = Functions.get_rules(rules_path);
+			ham_result = Functions.file_to_array(ham_path);
+			spam_result = Functions.file_to_array(spam_path);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		int count = 0;
 
 		setNumberOfVariables(numberOfVariables);
 		setNumberOfObjectives(2);
@@ -54,12 +59,8 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 			solution2.add(solution.getVariableValue(i));
 		}
 
-		try {
-			fx[0] = Functions.evaluate(0, rules, solution2, ham_path);
-			fx[1] = Functions.evaluate(1, rules, solution2, spam_path);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		fx[0] = Functions.evaluate2(0, rules, solution2, ham_result);
+		fx[1] = Functions.evaluate2(1, rules, solution2, spam_result);
 
 		//		System.out.println("FP: " + fx[0] + ", FN: " + fx[1]);
 
