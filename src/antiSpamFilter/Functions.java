@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Functions {
-	
+
 	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
 	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
 	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
@@ -34,7 +34,7 @@ public class Functions {
 		sc.close();
 		return count;
 	}
-	
+
 	/**
 	 * Returns an array with the rules inside rules.cf
 	 * 
@@ -54,7 +54,7 @@ public class Functions {
 		sc.close();		
 		return rules;
 	}
-	
+
 	/**
 	 * Returns an array with the weights inside rules.cf
 	 * 
@@ -108,7 +108,7 @@ public class Functions {
 
 		pw.close();		
 	}
-	
+
 	/**
 	 * <p> Converts ham.log/spam.log to an array. 
 	 * <p> Each position corresponds to an email. Each position then has another array that contains the rules the
@@ -135,7 +135,7 @@ public class Functions {
 		sc.close();		
 		return result;
 	}
-	
+
 	/**
 	 * Evaluates the solution returning the total of FP or FN
 	 * 
@@ -149,24 +149,24 @@ public class Functions {
 		double total = 0.0;
 		for (ArrayList<String> line : result) {
 			Double sum = 0.0;
-			
 			for (String rule : line) {
 				int index = rules.indexOf(rule);
 
 				if (index!=-1){		
-					sum += solution.get(index);
-					
+					sum += solution.get(index);			
 				}else{
-					System.out.println(rule);
+					System.out.println("Warning - rules doesn't exist in rules.cf: " + rule);
 				}
 			}
 
 			if (type == 0){ 
-				if (sum > 5.0) // FP
+				if (sum > 5.0){ // FP
 					total++;
+				}					
 			}else{ 
-				if (sum < 5.0) // FN
-					total++;			
+				if (sum < 5.0){ // FN				
+					total++;
+				}							
 			}	
 		}
 		return total;
@@ -174,11 +174,12 @@ public class Functions {
 
 	public static void main(String[] args) throws IOException{
 		ArrayList<String> rules = get_rules(rules_path);
-//		Generate.generate_ham_spam(695, rules, spam_path);
+		//		Generate.generate_ham_spam(695, rules, spam_path);
 		ArrayList<Double> solution = Generate.generate_solution(337);
+		write_weights(rules_path, solution);
 		System.out.println("FP: " + evaluate_solution(0, rules, solution, file_to_array(ham_path)));
 		System.out.println("FN: " + evaluate_solution(1, rules, solution, file_to_array(spam_path)));
-		
+
 		//Generate.new_ham_spam(ham_path);
 	}
 }
