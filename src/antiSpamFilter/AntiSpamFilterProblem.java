@@ -9,7 +9,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
-	static int nRules = 335;
+	static int nRules = 337;
 	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
 	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
 	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
@@ -30,7 +30,6 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		int count = 0;
 
 		setNumberOfVariables(numberOfVariables);
 		setNumberOfObjectives(2);
@@ -59,8 +58,8 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 			solution2.add(solution.getVariableValue(i));
 		}
 
-		fx[0] = Functions.evaluate2(0, rules, solution2, ham_result);
-		fx[1] = Functions.evaluate2(1, rules, solution2, spam_result);
+		fx[0] = Functions.evaluate_solution(0, rules, solution2, ham_result);
+		fx[1] = Functions.evaluate_solution(1, rules, solution2, spam_result);
 
 		//		System.out.println("FP: " + fx[0] + ", FN: " + fx[1]);
 
