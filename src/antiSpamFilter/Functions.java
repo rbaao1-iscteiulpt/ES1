@@ -10,11 +10,6 @@ import java.util.Scanner;
 
 public class Functions {
 
-	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
-	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
-	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
-	private static String solution_path = "experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs";
-
 	/**
 	 * Counts the number of lines in the file rules.cf, which corresponds to the number of rules
 	 * 
@@ -169,12 +164,49 @@ public class Functions {
 		}
 		return total;
 	}
+	
+	/**
+	 * Chooses the best solution to a Mixed (Professional and Leisure) Mailbox
+	 * 
+	 * @param path to AntiSpamFilterProblem.NSGAII.rf
+	 * @return number of the line of the best solution
+	 * @throws FileNotFoundException
+	 */
+	public static int choose_solution(String path) throws FileNotFoundException{
+		
+		int n_line = 0;
+		int count = 0;
+		double dif = 0;
+		
+		Scanner sc = new Scanner(new File(path));
+
+		while (sc.hasNextLine()) {
+			
+			String line = sc.nextLine();
+			String [] temp = line.split(" ");
+			
+			double dif_temp = Math.abs(Double.parseDouble(temp[0])- Double.parseDouble(temp[1]));
+			
+			if (count == 0){
+				dif = dif_temp;
+			}else{
+				if (dif > dif_temp){
+					dif = dif_temp;
+					n_line = count;
+				}
+			}		
+			count++;
+		}
+		sc.close();
+		
+		return n_line;
+	}
 
 	/**
 	 * Returns an ArrayList with the solution in the line that we want
 	 * 
-	 * @param n_line of the solution of the document
-	 * @param path to AntiSpamFilterProble.NSGAII.rs
+	 * @param n_line of the solution of the document (result of choose_solution())
+	 * @param path to AntiSpamFilterProblem.NSGAII.rs
 	 * @return ArrayList with the results 
 	 * @throws FileNotFoundException
 	 */
@@ -196,17 +228,5 @@ public class Functions {
 		}	
 		sc.close();		
 		return solution;
-	}
-
-	public static void main(String[] args) throws IOException{
-		ArrayList<String> rules = get_rules(rules_path);
-		//		Generate.generate_ham_spam(695, rules, spam_path);
-		ArrayList<Double> solution = Generate.generate_solution(337);
-		//		write_weights(rules_path, solution);
-		System.out.println("FP: " + evaluate_solution(0, rules, solution, file_to_array(ham_path)));
-		System.out.println("FN: " + evaluate_solution(1, rules, solution, file_to_array(spam_path)));
-
-		//		get_solution(0, solution_path);
-		//Generate.new_ham_spam(ham_path);
 	}
 }
