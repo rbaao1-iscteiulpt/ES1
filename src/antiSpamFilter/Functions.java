@@ -79,15 +79,15 @@ public class Functions {
 	/**
 	 * Writes in path (rules.cf) the new weights
 	 * 
-	 * @param path of rules.cf
+	 * @param rules_path of rules.cf
 	 * @param solution
 	 * @throws IOException
 	 */
-	public static void write_weights(String path, ArrayList<Double> solution) throws IOException{
+	public static void write_weights(String rules_path, ArrayList<Double> solution) throws IOException{
 
 		ArrayList<String> rules = new ArrayList<String>();
 
-		Scanner sc = new Scanner(new File(path));
+		Scanner sc = new Scanner(new File(rules_path));
 		String line;
 		int count = 0;
 
@@ -101,7 +101,7 @@ public class Functions {
 		sc.close();
 
 		// Writes the new weights on the file
-		PrintWriter pw = new PrintWriter(new FileWriter(path));
+		PrintWriter pw = new PrintWriter(new FileWriter(rules_path));
 
 		for (String rule : rules) {
 			pw.println(rule);
@@ -152,11 +152,8 @@ public class Functions {
 			Double sum = 0.0;
 			for (String rule : line) {
 				int index = rules.indexOf(rule);
-
 				if (index!=-1){		
 					sum += solution.get(index);			
-				}else{
-					System.out.println("Warning - rules doesn't exist in rules.cf: " + rule);
 				}
 			}
 
@@ -177,7 +174,7 @@ public class Functions {
 	 * Returns an ArrayList with the solution in the line that we want
 	 * 
 	 * @param n_line of the solution of the document
-	 * @param path to AntiSpamFilterProble.NSGAII.rf
+	 * @param path to AntiSpamFilterProble.NSGAII.rs
 	 * @return ArrayList with the results 
 	 * @throws FileNotFoundException
 	 */
