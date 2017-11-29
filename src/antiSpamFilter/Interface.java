@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -106,7 +107,7 @@ public class Interface {
 		pathPanel.add(rulesPath, gbc_rulesPath);
 		rulesPath.setColumns(10);
 		
-		//Rules Change Button TODO
+		//Rules Change Button
 		JButton rulesButton = new JButton("Change");
 		rulesButton.addActionListener(new ActionListener() {
 			@Override
@@ -335,7 +336,7 @@ public class Interface {
 		manualPanel.add(manButtonsPanel, gbc_manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		//Test Button, [not implemented]! TODO
+		//Test Button
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
 		testButton.addActionListener(new ActionListener() {
@@ -363,9 +364,26 @@ public class Interface {
 			}
 		});
 		
-		//Save Button, [not implemented]! TODO
+		//Save Button
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
+		
+		mSaveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String[] allWeights = mWeightTextArea.getText().split("\n");
+					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
+					ArrayList<Double> weightsD = new ArrayList<Double>();
+					for (String w : weights) {
+						weightsD.add(Double.parseDouble(w));
+					}
+					Functions.write_weights(rulesPath.getText(), weightsD);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		//Panel for auto interface where the second textArea is not editable.
 		//Has the result panel, 2 text areas (for rules names & his weights), and buttons
