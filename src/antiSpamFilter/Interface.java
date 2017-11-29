@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -68,15 +70,18 @@ public class Interface {
 	 */
 	private void initialize() {
 		
-		//frame creation
+		/**
+		 * Frame creation.
+		 */
 		frame = new JFrame();
 		frame.setBounds(100, 100, 750, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(3, 0, 5, 2));
 		
-		
-		//Panel with all paths and change buttons (Rules, Ham and Spam)
-		//each line as a Label, Field and correspondent button
+		/**
+		 * Panel with all paths and change buttons (Rules, Ham and Spam).
+		 * Each line as a Label, Field and correspondent button.
+		 */	
 		JPanel pathPanel = new JPanel();
 		frame.getContentPane().add(pathPanel);
 		GridBagLayout gbl_pathPanel = new GridBagLayout();
@@ -86,7 +91,9 @@ public class Interface {
 		gbl_pathPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pathPanel.setLayout(gbl_pathPanel);
 		
-		//Rules label
+		/**
+		 * Rules label.
+		 */
 		JLabel rulesLabel = new JLabel("Path Rules.cf");
 		rulesLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_rulesLabel = new GridBagConstraints();
@@ -96,7 +103,9 @@ public class Interface {
 		gbc_rulesLabel.gridy = 0;
 		pathPanel.add(rulesLabel, gbc_rulesLabel);
 		
-		//Rules path Field
+		/**
+		 * Rules path Field.
+		 */
 		rulesPath = new JTextField();
 		rulesPath.setEditable(false);
 		GridBagConstraints gbc_rulesPath = new GridBagConstraints();
@@ -107,7 +116,9 @@ public class Interface {
 		pathPanel.add(rulesPath, gbc_rulesPath);
 		rulesPath.setColumns(10);
 		
-		//Rules Change Button
+		/**
+		 * Rules Change Button.
+		 */
 		JButton rulesButton = new JButton("Change");
 		rulesButton.addActionListener(new ActionListener() {
 			@Override
@@ -148,7 +159,9 @@ public class Interface {
 		pathPanel.add(rulesButton, gbc_rulesButton);
 		
 		
-		//Ham Label
+		/**
+		 * Ham Label.
+		 */
 		JLabel hamLabel = new JLabel("Path Ham.log");
 		hamLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_hamLabel = new GridBagConstraints();
@@ -158,7 +171,9 @@ public class Interface {
 		gbc_hamLabel.gridy = 1;
 		pathPanel.add(hamLabel, gbc_hamLabel);
 		
-		//Ham path Field
+		/**
+		 * Ham path Field.
+		 */
 		hamPath = new JTextField();
 		hamPath.setEditable(false);
 		GridBagConstraints gbc_hamPath = new GridBagConstraints();
@@ -169,7 +184,9 @@ public class Interface {
 		pathPanel.add(hamPath, gbc_hamPath);
 		hamPath.setColumns(10);
 		
-		//Ham change Button
+		/**
+		 * Ham change path Button.
+		 */
 		JButton hamButton = new JButton("Change");
 		hamButton.addActionListener(new ActionListener() {
 			@Override
@@ -189,7 +206,9 @@ public class Interface {
 		gbc_hamButton.gridy = 1;
 		pathPanel.add(hamButton, gbc_hamButton);
 		
-		//Spam Label
+		/**
+		 * Spam Label.
+		 */
 		JLabel spamLabel = new JLabel("Path Spam.log");
 		spamLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_spamLabel = new GridBagConstraints();
@@ -199,7 +218,9 @@ public class Interface {
 		gbc_spamLabel.gridy = 2;
 		pathPanel.add(spamLabel, gbc_spamLabel);
 		
-		//Spam path Field
+		/**
+		 * Spam path Field.
+		 */
 		spamPath = new JTextField();
 		spamPath.setEditable(false);
 		GridBagConstraints gbc_spamPath = new GridBagConstraints();
@@ -210,7 +231,9 @@ public class Interface {
 		pathPanel.add(spamPath, gbc_spamPath);
 		spamPath.setColumns(10);
 		
-		//Spam change Button
+		/**
+		 * Spam change path Button.
+		 */
 		JButton spamButton = new JButton("Change");
 		spamButton.addActionListener(new ActionListener() {
 			@Override
@@ -229,8 +252,11 @@ public class Interface {
 		gbc_spamButton.gridy = 2;
 		pathPanel.add(spamButton, gbc_spamButton);
 		
-		//Panel for manual interface, which has an editable text area contrary to the autoPanel
-		//Has the result panel, 2 text areas (for rules names & his weights), and buttons
+		/**
+		 * Panel for manual interface.
+		 * Has the result panel, 2 textAreas (for rules names & his weights), and buttons.
+		 * The Weights textArea it's editable
+		 */
 		JPanel manualPanel = new JPanel();
 		frame.getContentPane().add(manualPanel);
 		GridBagLayout gbl_manualPanel = new GridBagLayout();
@@ -240,7 +266,9 @@ public class Interface {
 		gbl_manualPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		manualPanel.setLayout(gbl_manualPanel);
 		
-		//Reults Panel
+		/**
+		 * [Manual] Results Panel.
+		 */
 		JPanel manResultsPanel = new JPanel();
 		GridBagConstraints gbc_manResultsPanel = new GridBagConstraints();
 		gbc_manResultsPanel.fill = GridBagConstraints.BOTH;
@@ -255,7 +283,9 @@ public class Interface {
 		gbl_manResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		manResultsPanel.setLayout(gbl_manResultsPanel);
 		
-		//False Positive Label
+		/**
+		 * [Manual] False Positive Label
+		 */
 		JLabel mFalsePosLabel = new JLabel("FP:");
 		mFalsePosLabel.setToolTipText("False Positives");
 		mFalsePosLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -266,7 +296,9 @@ public class Interface {
 		gbc_mFalsePosLabel.gridy = 0;
 		manResultsPanel.add(mFalsePosLabel, gbc_mFalsePosLabel);
 		
-		//False Positive values
+		/**
+		 * [Manual] False Positive values
+		 */
 		mFalsePosField = new JTextField();
 		mFalsePosField.setEditable(false);
 		mFalsePosField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -279,7 +311,9 @@ public class Interface {
 		manResultsPanel.add(mFalsePosField, gbc_mFalsePosField);
 		mFalsePosField.setColumns(10);
 		
-		//False Negative Label
+		/**
+		 * [Manual] False Negative Label
+		 */
 		JLabel mFalseNegLabel = new JLabel("FN:");
 		mFalseNegLabel.setToolTipText("False Negatives");
 		mFalseNegLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -290,7 +324,9 @@ public class Interface {
 		gbc_mFalseNegLabel.gridy = 1;
 		manResultsPanel.add(mFalseNegLabel, gbc_mFalseNegLabel);
 		
-		//False Negative values
+		/**
+		 * [Manual] False Negative values
+		 */
 		mFalseNegField = new JTextField();
 		mFalseNegField.setEditable(false);
 		mFalseNegField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -302,7 +338,9 @@ public class Interface {
 		manResultsPanel.add(mFalseNegField, gbc_mFalseNegField);
 		mFalseNegField.setColumns(10);
 		
-		//Panel for the 2 text areas(Rules name & respective weights)
+		/**
+		 * [Manual] Panel for the 2 text areas(Rules name & respective weights)
+		 */
 		JPanel manRulesPanel = new JPanel();
 		GridBagConstraints gbc_manRulesPanel = new GridBagConstraints();
 		gbc_manRulesPanel.fill = GridBagConstraints.BOTH;
@@ -312,22 +350,38 @@ public class Interface {
 		manualPanel.add(manRulesPanel, gbc_manRulesPanel);
 		manRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
-		//Rules name textArea
+		/**
+		 * [Manual] Rules name textArea
+		 */
 		mRulesTextArea = new JTextArea();
 		mRulesTextArea.setEditable(false);
 		
-		//Rules weights textArea
+		/**
+		 * [Manual] Rules weights textArea (editable)
+		 */
 		mWeightTextArea = new JTextArea();
 		
-		//Scroll for BOTH manual textAreas
+		/**
+		 * [Manual] Scroll for BOTH manual textAreas
+		 * Redirects Wheels events from Rules textArea to Weight textArea.
+		 * Keep in mind that both text areas must be the same Height to scrolls to work
+		 */
 		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		mRuleScrollPane.getHorizontalScrollBar().setModel(mWeightScrollPane.getHorizontalScrollBar().getModel());
 		mRuleScrollPane.getVerticalScrollBar().setModel(mWeightScrollPane.getVerticalScrollBar().getModel());
+		mRuleScrollPane.setWheelScrollingEnabled(false);
+		mRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
+		    public void mouseWheelMoved(MouseWheelEvent e) {
+		        mWeightScrollPane.dispatchEvent(e);
+		    }
+		});
 		manRulesPanel.add(mRuleScrollPane);
 		manRulesPanel.add(mWeightScrollPane);
 		
-		//Buttons Panel
+		/**
+		 * [Manual] Buttons Panel
+		 */
 		JPanel manButtonsPanel = new JPanel();
 		GridBagConstraints gbc_manButtonsPanel = new GridBagConstraints();
 		gbc_manButtonsPanel.fill = GridBagConstraints.BOTH;
@@ -336,7 +390,9 @@ public class Interface {
 		manualPanel.add(manButtonsPanel, gbc_manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		//Test Button
+		/**
+		 * Test Button
+		 */
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
 		testButton.addActionListener(new ActionListener() {
@@ -364,7 +420,9 @@ public class Interface {
 			}
 		});
 		
-		//Save Button
+		/**
+		 * Save Button, [not implemented]!
+		 */
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
 		
@@ -385,8 +443,10 @@ public class Interface {
 			}
 		});
 		
-		//Panel for auto interface where the second textArea is not editable.
-		//Has the result panel, 2 text areas (for rules names & his weights), and buttons
+		/**
+		 * Panel for Auto interface.
+		 * Has the result panel, 2 text areas (for rules names & his weights), and buttons.
+		 */
 		JPanel autoPanel = new JPanel();
 		frame.getContentPane().add(autoPanel);
 		GridBagLayout gbl_autoPanel = new GridBagLayout();
@@ -396,7 +456,9 @@ public class Interface {
 		gbl_autoPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		autoPanel.setLayout(gbl_autoPanel);
 		
-		//Results panel
+		/**
+		 * [Auto] Results panel.
+		 */
 		JPanel autoResultsPanel = new JPanel();
 		GridBagConstraints gbc_autoResultsPanel = new GridBagConstraints();
 		gbc_autoResultsPanel.fill = GridBagConstraints.BOTH;
@@ -411,7 +473,9 @@ public class Interface {
 		gbl_autoResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		autoResultsPanel.setLayout(gbl_autoResultsPanel);
 		
-		//False Positive label
+		/**
+		 * [Auto] False Positive label.
+		 */
 		JLabel aFalsePositiveLabel = new JLabel("FP:");
 		aFalsePositiveLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		aFalsePositiveLabel.setToolTipText("False Positives");
@@ -422,7 +486,9 @@ public class Interface {
 		gbc_aFalsePositiveLabel.gridy = 0;
 		autoResultsPanel.add(aFalsePositiveLabel, gbc_aFalsePositiveLabel);
 		
-		//False Positive values
+		/**
+		 * [Auto] False Positive values.
+		 */
 		aFalsePositiveField = new JTextField();
 		aFalsePositiveField.setEditable(false);
 		aFalsePositiveField.setText("0");
@@ -435,7 +501,9 @@ public class Interface {
 		autoResultsPanel.add(aFalsePositiveField, gbc_aFalsePositiveField);
 		aFalsePositiveField.setColumns(10);
 		
-		//False Negative Label
+		/**
+		 * [Auto] False Negative Label.
+		 */
 		JLabel aFalseNegativeLabel = new JLabel("FN:");
 		aFalseNegativeLabel.setToolTipText("False Negatives");
 		aFalseNegativeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -446,7 +514,9 @@ public class Interface {
 		gbc_aFalseNegativeLabel.gridy = 1;
 		autoResultsPanel.add(aFalseNegativeLabel, gbc_aFalseNegativeLabel);
 		
-		//False Negative values
+		/**
+		 * [Auto] False Negative values.
+		 */
 		aFalseNegativeField = new JTextField();
 		aFalseNegativeField.setEditable(false);
 		aFalseNegativeField.setText("0");
@@ -458,7 +528,9 @@ public class Interface {
 		autoResultsPanel.add(aFalseNegativeField, gbc_aFalseNegativeField);
 		aFalseNegativeField.setColumns(10);
 		
-		//Panel for the 2 text areas(Rules name & respective weights)
+		/**
+		 * [Auto] Panel for the 2 text areas(Rules name & respective weights).
+		 */
 		JPanel autoRulesPanel = new JPanel();
 		GridBagConstraints gbc_autoRulesPanel = new GridBagConstraints();
 		gbc_autoRulesPanel.fill = GridBagConstraints.BOTH;
@@ -468,15 +540,22 @@ public class Interface {
 		autoPanel.add(autoRulesPanel, gbc_autoRulesPanel);
 		autoRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
-		//Rules name textArea
+		/**
+		 * [Auto] Rules name textArea.
+		 */
 		aRulesTextArea = new JTextArea();
 		aRulesTextArea.setEditable(false);
 		
-		//Rules weights textArea
+		/** 
+		 * [Auto] Rules weights textArea.
+		 */
 		aWeightTextArea = new JTextArea();
 		aWeightTextArea.setEditable(false);
 
-		//Scroll for BOTH auto text areas
+		/**
+		 * [Auto] Scroll for BOTH auto text areas.
+		 * Keep in mind that both text areas must be the same Height to scrolls to work
+		 */
 		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
@@ -484,7 +563,9 @@ public class Interface {
 		autoRulesPanel.add(aRuleScrollPane);
 		autoRulesPanel.add(aWeightScrollPane);
 		
-		//Buttons panel
+		/**
+		 * [Auto] Buttons panel.
+		 */
 		JPanel autoButtonsPanel = new JPanel();
 		GridBagConstraints gbc_autoButtonsPanel = new GridBagConstraints();
 		gbc_autoButtonsPanel.fill = GridBagConstraints.BOTH;
@@ -493,11 +574,15 @@ public class Interface {
 		autoPanel.add(autoButtonsPanel, gbc_autoButtonsPanel);
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		//Generate Button, [Not implemented]!
+		/**
+		 * [Auto] Generate Button, [Not implemented]!
+		 */
 		JButton generateButton = new JButton("Generate");
 		autoButtonsPanel.add(generateButton);
 		
-		//Save Button, [Not implemented]!
+		/**
+		 * [Auto] Save Button, [Not implemented]!
+		 */
 		JButton aSaveButton = new JButton("Save");
 		autoButtonsPanel.add(aSaveButton);
 	}
