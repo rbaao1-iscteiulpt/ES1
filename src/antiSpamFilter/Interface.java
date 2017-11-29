@@ -4,14 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import javax.swing.JTextArea;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class Interface {
 
@@ -58,73 +65,199 @@ public class Interface {
 		
 		JPanel pathPanel = new JPanel();
 		frame.getContentPane().add(pathPanel);
-		pathPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		GridBagLayout gbl_pathPanel = new GridBagLayout();
+		gbl_pathPanel.columnWidths = new int[]{120, 528, 86, 0};
+		gbl_pathPanel.rowHeights = new int[]{34, 34, 34, 0};
+		gbl_pathPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pathPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		pathPanel.setLayout(gbl_pathPanel);
 		
 		JLabel rulesLabel = new JLabel("Path Rules.cf");
 		rulesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pathPanel.add(rulesLabel);
-		
-		rulesPath = new JTextField();
-		pathPanel.add(rulesPath);
-		rulesPath.setColumns(10);
+		GridBagConstraints gbc_rulesLabel = new GridBagConstraints();
+		gbc_rulesLabel.fill = GridBagConstraints.BOTH;
+		gbc_rulesLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_rulesLabel.gridx = 0;
+		gbc_rulesLabel.gridy = 0;
+		pathPanel.add(rulesLabel, gbc_rulesLabel);
 		
 		JButton rulesButton = new JButton("Change");
-		pathPanel.add(rulesButton);
+		rulesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jc = new JFileChooser();
+				int returnVal = jc.showOpenDialog(frame);
+
+			       if (returnVal == JFileChooser.APPROVE_OPTION) {
+			    	   rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
+			       }
+			}
+		});
+		
+		rulesPath = new JTextField();
+		rulesPath.setEditable(false);
+		GridBagConstraints gbc_rulesPath = new GridBagConstraints();
+		gbc_rulesPath.fill = GridBagConstraints.BOTH;
+		gbc_rulesPath.insets = new Insets(0, 0, 5, 5);
+		gbc_rulesPath.gridx = 1;
+		gbc_rulesPath.gridy = 0;
+		pathPanel.add(rulesPath, gbc_rulesPath);
+		rulesPath.setColumns(10);
+		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
+		gbc_rulesButton.fill = GridBagConstraints.BOTH;
+		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
+		gbc_rulesButton.gridx = 2;
+		gbc_rulesButton.gridy = 0;
+		pathPanel.add(rulesButton, gbc_rulesButton);
 		
 		JLabel hamLabel = new JLabel("Path Ham.log");
 		hamLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pathPanel.add(hamLabel);
+		GridBagConstraints gbc_hamLabel = new GridBagConstraints();
+		gbc_hamLabel.fill = GridBagConstraints.BOTH;
+		gbc_hamLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_hamLabel.gridx = 0;
+		gbc_hamLabel.gridy = 1;
+		pathPanel.add(hamLabel, gbc_hamLabel);
 		
 		hamPath = new JTextField();
-		pathPanel.add(hamPath);
+		hamPath.setEditable(false);
+		GridBagConstraints gbc_hamPath = new GridBagConstraints();
+		gbc_hamPath.fill = GridBagConstraints.BOTH;
+		gbc_hamPath.insets = new Insets(0, 0, 5, 5);
+		gbc_hamPath.gridx = 1;
+		gbc_hamPath.gridy = 1;
+		pathPanel.add(hamPath, gbc_hamPath);
 		hamPath.setColumns(10);
 		
 		JButton hamButton = new JButton("Change");
-		pathPanel.add(hamButton);
+		hamButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jc = new JFileChooser();
+				int returnVal = jc.showOpenDialog(frame);
+
+			       if (returnVal == JFileChooser.APPROVE_OPTION) {
+			    	   hamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			       }
+			}
+		});
+		GridBagConstraints gbc_hamButton = new GridBagConstraints();
+		gbc_hamButton.fill = GridBagConstraints.BOTH;
+		gbc_hamButton.insets = new Insets(0, 0, 5, 0);
+		gbc_hamButton.gridx = 2;
+		gbc_hamButton.gridy = 1;
+		pathPanel.add(hamButton, gbc_hamButton);
 		
 		JLabel spamLabel = new JLabel("Path Spam.log");
 		spamLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pathPanel.add(spamLabel);
+		GridBagConstraints gbc_spamLabel = new GridBagConstraints();
+		gbc_spamLabel.fill = GridBagConstraints.BOTH;
+		gbc_spamLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_spamLabel.gridx = 0;
+		gbc_spamLabel.gridy = 2;
+		pathPanel.add(spamLabel, gbc_spamLabel);
 		
 		spamPath = new JTextField();
-		pathPanel.add(spamPath);
+		spamPath.setEditable(false);
+		GridBagConstraints gbc_spamPath = new GridBagConstraints();
+		gbc_spamPath.fill = GridBagConstraints.BOTH;
+		gbc_spamPath.insets = new Insets(0, 0, 0, 5);
+		gbc_spamPath.gridx = 1;
+		gbc_spamPath.gridy = 2;
+		pathPanel.add(spamPath, gbc_spamPath);
 		spamPath.setColumns(10);
 		
 		JButton spamButton = new JButton("Change");
-		pathPanel.add(spamButton);
+		spamButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jc = new JFileChooser();
+				int returnVal = jc.showOpenDialog(frame);
+
+			       if (returnVal == JFileChooser.APPROVE_OPTION) {
+			    	   spamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			       }
+			}
+		});
+		GridBagConstraints gbc_spamButton = new GridBagConstraints();
+		gbc_spamButton.fill = GridBagConstraints.BOTH;
+		gbc_spamButton.gridx = 2;
+		gbc_spamButton.gridy = 2;
+		pathPanel.add(spamButton, gbc_spamButton);
 		
 		JPanel manualPanel = new JPanel();
 		frame.getContentPane().add(manualPanel);
-		manualPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		GridBagLayout gbl_manualPanel = new GridBagLayout();
+		gbl_manualPanel.columnWidths = new int[]{119, 527, 86, 0};
+		gbl_manualPanel.rowHeights = new int[]{102, 0};
+		gbl_manualPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_manualPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		manualPanel.setLayout(gbl_manualPanel);
 		
 		JPanel manResultsPanel = new JPanel();
-		manualPanel.add(manResultsPanel);
-		manResultsPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		GridBagConstraints gbc_manResultsPanel = new GridBagConstraints();
+		gbc_manResultsPanel.fill = GridBagConstraints.BOTH;
+		gbc_manResultsPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_manResultsPanel.gridx = 0;
+		gbc_manResultsPanel.gridy = 0;
+		manualPanel.add(manResultsPanel, gbc_manResultsPanel);
+		GridBagLayout gbl_manResultsPanel = new GridBagLayout();
+		gbl_manResultsPanel.columnWidths = new int[]{60, 56, 0};
+		gbl_manResultsPanel.rowHeights = new int[]{51, 51, 0};
+		gbl_manResultsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_manResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		manResultsPanel.setLayout(gbl_manResultsPanel);
 		
 		JLabel mFalsePosLabel = new JLabel("FP:");
 		mFalsePosLabel.setToolTipText("False Positives");
 		mFalsePosLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		manResultsPanel.add(mFalsePosLabel);
+		GridBagConstraints gbc_mFalsePosLabel = new GridBagConstraints();
+		gbc_mFalsePosLabel.fill = GridBagConstraints.BOTH;
+		gbc_mFalsePosLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_mFalsePosLabel.gridx = 0;
+		gbc_mFalsePosLabel.gridy = 0;
+		manResultsPanel.add(mFalsePosLabel, gbc_mFalsePosLabel);
 		
 		mFalsePosField = new JTextField();
+		mFalsePosField.setEditable(false);
 		mFalsePosField.setHorizontalAlignment(SwingConstants.CENTER);
 		mFalsePosField.setText("0");
-		manResultsPanel.add(mFalsePosField);
+		GridBagConstraints gbc_mFalsePosField = new GridBagConstraints();
+		gbc_mFalsePosField.fill = GridBagConstraints.BOTH;
+		gbc_mFalsePosField.insets = new Insets(0, 0, 5, 0);
+		gbc_mFalsePosField.gridx = 1;
+		gbc_mFalsePosField.gridy = 0;
+		manResultsPanel.add(mFalsePosField, gbc_mFalsePosField);
 		mFalsePosField.setColumns(10);
 		
 		JLabel mFalseNegLabel = new JLabel("FN:");
 		mFalseNegLabel.setToolTipText("False Negatives");
 		mFalseNegLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		manResultsPanel.add(mFalseNegLabel);
+		GridBagConstraints gbc_mFalseNegLabel = new GridBagConstraints();
+		gbc_mFalseNegLabel.fill = GridBagConstraints.BOTH;
+		gbc_mFalseNegLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_mFalseNegLabel.gridx = 0;
+		gbc_mFalseNegLabel.gridy = 1;
+		manResultsPanel.add(mFalseNegLabel, gbc_mFalseNegLabel);
 		
 		mFalseNegField = new JTextField();
+		mFalseNegField.setEditable(false);
 		mFalseNegField.setHorizontalAlignment(SwingConstants.CENTER);
 		mFalseNegField.setText("0");
-		manResultsPanel.add(mFalseNegField);
+		GridBagConstraints gbc_mFalseNegField = new GridBagConstraints();
+		gbc_mFalseNegField.fill = GridBagConstraints.BOTH;
+		gbc_mFalseNegField.gridx = 1;
+		gbc_mFalseNegField.gridy = 1;
+		manResultsPanel.add(mFalseNegField, gbc_mFalseNegField);
 		mFalseNegField.setColumns(10);
 		
 		JPanel manRulesPanel = new JPanel();
-		manualPanel.add(manRulesPanel);
+		GridBagConstraints gbc_manRulesPanel = new GridBagConstraints();
+		gbc_manRulesPanel.fill = GridBagConstraints.BOTH;
+		gbc_manRulesPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_manRulesPanel.gridx = 1;
+		gbc_manRulesPanel.gridy = 0;
+		manualPanel.add(manRulesPanel, gbc_manRulesPanel);
 		manRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		JTextArea mRulesTextArea = new JTextArea();
@@ -135,7 +268,11 @@ public class Interface {
 		manRulesPanel.add(mWeightTextArea);
 		
 		JPanel manButtonsPanel = new JPanel();
-		manualPanel.add(manButtonsPanel);
+		GridBagConstraints gbc_manButtonsPanel = new GridBagConstraints();
+		gbc_manButtonsPanel.fill = GridBagConstraints.BOTH;
+		gbc_manButtonsPanel.gridx = 2;
+		gbc_manButtonsPanel.gridy = 0;
+		manualPanel.add(manButtonsPanel, gbc_manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		JButton testButton = new JButton("Test");
@@ -146,36 +283,77 @@ public class Interface {
 		
 		JPanel autoPanel = new JPanel();
 		frame.getContentPane().add(autoPanel);
-		autoPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		GridBagLayout gbl_autoPanel = new GridBagLayout();
+		gbl_autoPanel.columnWidths = new int[]{116, 527, 75, 0};
+		gbl_autoPanel.rowHeights = new int[]{102, 0};
+		gbl_autoPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_autoPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		autoPanel.setLayout(gbl_autoPanel);
 		
 		JPanel autoResultsPanel = new JPanel();
-		autoPanel.add(autoResultsPanel);
-		autoResultsPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		GridBagConstraints gbc_autoResultsPanel = new GridBagConstraints();
+		gbc_autoResultsPanel.fill = GridBagConstraints.BOTH;
+		gbc_autoResultsPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_autoResultsPanel.gridx = 0;
+		gbc_autoResultsPanel.gridy = 0;
+		autoPanel.add(autoResultsPanel, gbc_autoResultsPanel);
+		GridBagLayout gbl_autoResultsPanel = new GridBagLayout();
+		gbl_autoResultsPanel.columnWidths = new int[]{60, 56, 0};
+		gbl_autoResultsPanel.rowHeights = new int[]{51, 51, 0};
+		gbl_autoResultsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_autoResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		autoResultsPanel.setLayout(gbl_autoResultsPanel);
 		
 		JLabel aFalsePositiveLabel = new JLabel("FP:");
 		aFalsePositiveLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		aFalsePositiveLabel.setToolTipText("False Positives");
-		autoResultsPanel.add(aFalsePositiveLabel);
+		GridBagConstraints gbc_aFalsePositiveLabel = new GridBagConstraints();
+		gbc_aFalsePositiveLabel.fill = GridBagConstraints.BOTH;
+		gbc_aFalsePositiveLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_aFalsePositiveLabel.gridx = 0;
+		gbc_aFalsePositiveLabel.gridy = 0;
+		autoResultsPanel.add(aFalsePositiveLabel, gbc_aFalsePositiveLabel);
 		
 		aFalsePositiveField = new JTextField();
+		aFalsePositiveField.setEditable(false);
 		aFalsePositiveField.setText("0");
 		aFalsePositiveField.setHorizontalAlignment(SwingConstants.CENTER);
-		autoResultsPanel.add(aFalsePositiveField);
+		GridBagConstraints gbc_aFalsePositiveField = new GridBagConstraints();
+		gbc_aFalsePositiveField.fill = GridBagConstraints.BOTH;
+		gbc_aFalsePositiveField.insets = new Insets(0, 0, 5, 0);
+		gbc_aFalsePositiveField.gridx = 1;
+		gbc_aFalsePositiveField.gridy = 0;
+		autoResultsPanel.add(aFalsePositiveField, gbc_aFalsePositiveField);
 		aFalsePositiveField.setColumns(10);
 		
 		JLabel aFalseNegativeLabel = new JLabel("FN:");
 		aFalseNegativeLabel.setToolTipText("False Negatives");
 		aFalseNegativeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		autoResultsPanel.add(aFalseNegativeLabel);
+		GridBagConstraints gbc_aFalseNegativeLabel = new GridBagConstraints();
+		gbc_aFalseNegativeLabel.fill = GridBagConstraints.BOTH;
+		gbc_aFalseNegativeLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_aFalseNegativeLabel.gridx = 0;
+		gbc_aFalseNegativeLabel.gridy = 1;
+		autoResultsPanel.add(aFalseNegativeLabel, gbc_aFalseNegativeLabel);
 		
 		aFalseNegativeField = new JTextField();
+		aFalseNegativeField.setEditable(false);
 		aFalseNegativeField.setText("0");
 		aFalseNegativeField.setHorizontalAlignment(SwingConstants.CENTER);
-		autoResultsPanel.add(aFalseNegativeField);
+		GridBagConstraints gbc_aFalseNegativeField = new GridBagConstraints();
+		gbc_aFalseNegativeField.fill = GridBagConstraints.BOTH;
+		gbc_aFalseNegativeField.gridx = 1;
+		gbc_aFalseNegativeField.gridy = 1;
+		autoResultsPanel.add(aFalseNegativeField, gbc_aFalseNegativeField);
 		aFalseNegativeField.setColumns(10);
 		
 		JPanel autoRulesPanel = new JPanel();
-		autoPanel.add(autoRulesPanel);
+		GridBagConstraints gbc_autoRulesPanel = new GridBagConstraints();
+		gbc_autoRulesPanel.fill = GridBagConstraints.BOTH;
+		gbc_autoRulesPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_autoRulesPanel.gridx = 1;
+		gbc_autoRulesPanel.gridy = 0;
+		autoPanel.add(autoRulesPanel, gbc_autoRulesPanel);
 		autoRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		JTextArea aRulesTextArea = new JTextArea();
@@ -187,7 +365,11 @@ public class Interface {
 		autoRulesPanel.add(aWeightTextArea);
 		
 		JPanel autoButtonsPanel = new JPanel();
-		autoPanel.add(autoButtonsPanel);
+		GridBagConstraints gbc_autoButtonsPanel = new GridBagConstraints();
+		gbc_autoButtonsPanel.fill = GridBagConstraints.BOTH;
+		gbc_autoButtonsPanel.gridx = 2;
+		gbc_autoButtonsPanel.gridy = 0;
+		autoPanel.add(autoButtonsPanel, gbc_autoButtonsPanel);
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		JButton generateButton = new JButton("Generate");
