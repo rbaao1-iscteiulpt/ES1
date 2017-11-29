@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -332,11 +334,21 @@ public class Interface {
 		 */
 		JTextArea mWeightTextArea = new JTextArea();
 		
-		//Scroll for BOTH [Manual] textAreas
+		/**
+		 * [Manual] Scroll for BOTH manual textAreas
+		 * Redirects Wheels events from Rules textArea to Weight textArea.
+		 * Keep in mind that both text areas must be the same Height to scrolls to work
+		 */
 		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		mRuleScrollPane.getHorizontalScrollBar().setModel(mWeightScrollPane.getHorizontalScrollBar().getModel());
 		mRuleScrollPane.getVerticalScrollBar().setModel(mWeightScrollPane.getVerticalScrollBar().getModel());
+		mRuleScrollPane.setWheelScrollingEnabled(false);
+		mRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
+		    public void mouseWheelMoved(MouseWheelEvent e) {
+		        mWeightScrollPane.dispatchEvent(e);
+		    }
+		});
 		manRulesPanel.add(mRuleScrollPane);
 		manRulesPanel.add(mWeightScrollPane);
 		
@@ -474,11 +486,18 @@ public class Interface {
 
 		/**
 		 * [Auto] Scroll for BOTH auto text areas.
+		 * Keep in mind that both text areas must be the same Height to scrolls to work
 		 */
 		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
 		aRuleScrollPane.getVerticalScrollBar().setModel(aWeightScrollPane.getVerticalScrollBar().getModel());
+		aRuleScrollPane.setWheelScrollingEnabled(false);
+		aRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
+		    public void mouseWheelMoved(MouseWheelEvent e) {
+		        aWeightScrollPane.dispatchEvent(e);
+		    }
+		});
 		autoRulesPanel.add(aRuleScrollPane);
 		autoRulesPanel.add(aWeightScrollPane);
 		
