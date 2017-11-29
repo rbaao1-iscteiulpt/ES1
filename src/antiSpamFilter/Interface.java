@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -287,11 +288,17 @@ public class Interface {
 		//Rules name textArea
 		JTextArea mRulesTextArea = new JTextArea();
 		mRulesTextArea.setEditable(false);
-		manRulesPanel.add(mRulesTextArea);
 		
 		//Rules weights textArea
 		JTextArea mWeightTextArea = new JTextArea();
-		manRulesPanel.add(mWeightTextArea);
+		
+		//Scroll for BOTH manual textAreas
+		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		mRuleScrollPane.getHorizontalScrollBar().setModel(mWeightScrollPane.getHorizontalScrollBar().getModel());
+		mRuleScrollPane.getVerticalScrollBar().setModel(mWeightScrollPane.getVerticalScrollBar().getModel());
+		manRulesPanel.add(mRuleScrollPane);
+		manRulesPanel.add(mWeightScrollPane);
 		
 		//Buttons Panel
 		JPanel manButtonsPanel = new JPanel();
@@ -396,12 +403,18 @@ public class Interface {
 		//Rules name textArea
 		JTextArea aRulesTextArea = new JTextArea();
 		aRulesTextArea.setEditable(false);
-		autoRulesPanel.add(aRulesTextArea);
 		
 		//Rules weights textArea
 		JTextArea aWeightTextArea = new JTextArea();
 		aWeightTextArea.setEditable(false);
-		autoRulesPanel.add(aWeightTextArea);
+
+		//Scroll for BOTH auto text areas
+		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
+		aRuleScrollPane.getVerticalScrollBar().setModel(aWeightScrollPane.getVerticalScrollBar().getModel());
+		autoRulesPanel.add(aRuleScrollPane);
+		autoRulesPanel.add(aWeightScrollPane);
 		
 		//Buttons panel
 		JPanel autoButtonsPanel = new JPanel();
