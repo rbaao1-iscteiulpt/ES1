@@ -14,7 +14,7 @@ public class Functions {
 	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
 	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
 	private static String solution_path = "experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs";
-	
+
 	/**
 	 * Counts the number of lines in the file rules.cf, which corresponds to the number of rules
 	 * 
@@ -143,7 +143,7 @@ public class Functions {
 	 * @param type 0 for FP, 1 for FN
 	 * @param rules
 	 * @param solution
-	 * @param result of file_to_array() on ham.log or spam.log
+	 * @param result of file_to_array() on ham.log (FP) or spam.log (FN)
 	 * @return total of FP or FN
 	 */
 	public static Double evaluate_solution(int type, ArrayList<String> rules, ArrayList<Double> solution, ArrayList<ArrayList<String>> result){
@@ -172,7 +172,7 @@ public class Functions {
 		}
 		return total;
 	}
-	
+
 	/**
 	 * Returns an ArrayList with the solution in the line that we want
 	 * 
@@ -186,14 +186,13 @@ public class Functions {
 		Scanner sc = new Scanner(new File(path));
 		String line;
 		int count = 0;
-		
+
 		while (sc.hasNextLine() && !(count > n_line)) {
 			line = sc.nextLine();
 			String [] temp = line.split(" ");
 			if(count == n_line){
 				for (int i = 0; i < temp.length; i++) {
 					solution.add(Double.parseDouble(temp[i]));
-//					System.out.println("S_" + i + ": " + temp[i]);
 				}
 			}
 			count++;
@@ -206,11 +205,11 @@ public class Functions {
 		ArrayList<String> rules = get_rules(rules_path);
 		//		Generate.generate_ham_spam(695, rules, spam_path);
 		ArrayList<Double> solution = Generate.generate_solution(337);
-//		write_weights(rules_path, solution);
+		//		write_weights(rules_path, solution);
 		System.out.println("FP: " + evaluate_solution(0, rules, solution, file_to_array(ham_path)));
 		System.out.println("FN: " + evaluate_solution(1, rules, solution, file_to_array(spam_path)));
-		
-//		get_solution(0, solution_path);
+
+		//		get_solution(0, solution_path);
 		//Generate.new_ham_spam(ham_path);
 	}
 }

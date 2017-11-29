@@ -63,7 +63,7 @@ public class AntiSpamFilterAutomaticConfiguration {
 					problemList.get(i).getProblem(),
 					new SBXCrossover(1.0, 5),
 					new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(25000)
+					.setMaxEvaluations(2000)
 					.setPopulationSize(100)
 					.build();
 			algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));

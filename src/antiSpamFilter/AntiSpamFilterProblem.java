@@ -51,15 +51,15 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 //		double aux, xi, xj;
 		double[] fx = new double[getNumberOfObjectives()];	
-		ArrayList<Double> solution2 = new ArrayList<>();
+		ArrayList<Double> solution_tmp = new ArrayList<>();
 //		double[] x = new double[getNumberOfVariables()];
 		for (int i = 0; i < solution.getNumberOfVariables(); i++) {
 			//			x[i] = solution.getVariableValue(i);
-			solution2.add(solution.getVariableValue(i));
+			solution_tmp.add(solution.getVariableValue(i));
 		}
 
-		fx[0] = Functions.evaluate_solution(0, rules, solution2, ham_result);
-		fx[1] = Functions.evaluate_solution(1, rules, solution2, spam_result);
+		fx[0] = Functions.evaluate_solution(0, rules, solution_tmp, ham_result); // FP
+		fx[1] = Functions.evaluate_solution(1, rules, solution_tmp, spam_result); // FN
 
 		//		System.out.println("FP: " + fx[0] + ", FN: " + fx[1]);
 
