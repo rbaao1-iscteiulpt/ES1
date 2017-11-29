@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,9 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
+import javax.swing.SwingUtilities;
 import javax.swing.JTextArea;
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -31,10 +33,15 @@ public class Interface {
 	private JTextField mFalseNegField;
 	private JTextField aFalsePositiveField;
 	private JTextField aFalseNegativeField;
-
+	private JTextArea mRulesTextArea;
+	private JTextArea mWeightTextArea;
+	private JTextArea aRulesTextArea;
+	private JTextArea aWeightTextArea;
+	
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -99,7 +106,7 @@ public class Interface {
 		pathPanel.add(rulesPath, gbc_rulesPath);
 		rulesPath.setColumns(10);
 		
-		//Rules Change Button
+		//Rules Change Button TODO
 		JButton rulesButton = new JButton("Change");
 		rulesButton.addActionListener(new ActionListener() {
 			@Override
@@ -109,6 +116,25 @@ public class Interface {
 
 			       if (returnVal == JFileChooser.APPROVE_OPTION) {
 			    	   rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
+			    	   try {
+						ArrayList<String> rules = Functions.get_rules(jc.getSelectedFile().getAbsolutePath());
+						ArrayList<String> weights = Functions.get_weights(jc.getSelectedFile().getAbsolutePath());
+						
+							SwingUtilities.invokeLater(new Runnable(){
+								public void run() {
+									for (String r: rules){
+										mRulesTextArea.setText(mRulesTextArea.getText() + r + "\n");
+										aRulesTextArea.setText(aRulesTextArea.getText() + r + "\n");
+									}
+									for (String w: weights){
+										mWeightTextArea.setText(mWeightTextArea.getText() + w + "\n");
+										aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
+									}
+								}
+							});
+						}catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 			       }
 			}
 		});
@@ -286,11 +312,11 @@ public class Interface {
 		manRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		//Rules name textArea
-		JTextArea mRulesTextArea = new JTextArea();
+		mRulesTextArea = new JTextArea();
 		mRulesTextArea.setEditable(false);
 		
 		//Rules weights textArea
-		JTextArea mWeightTextArea = new JTextArea();
+		mWeightTextArea = new JTextArea();
 		
 		//Scroll for BOTH manual textAreas
 		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -309,11 +335,35 @@ public class Interface {
 		manualPanel.add(manButtonsPanel, gbc_manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		//Test Button, [not implemented]!
+		//Test Button, [not implemented]! TODO
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
+		testButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					String[] allRules = mRulesTextArea.getText().split("\n");
+					ArrayList<String> rules = new ArrayList<String>(Arrays.asList(allRules));
+					
+					String[] allWeights = mWeightTextArea.getText().split("\n");
+					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
+					ArrayList<Double> weightsD = new ArrayList<Double>();
+					for (String w : weights) {
+						weightsD.add(Double.parseDouble(w));
+					}
+					
+					mFalsePosField.setText((Functions.evaluate_solution(0, rules, weightsD,
+							Functions.file_to_array(hamPath.getText()))).toString());
+					mFalseNegField.setText((Functions.evaluate_solution(1, rules, weightsD,
+							Functions.file_to_array(spamPath.getText()))).toString());
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
-		//Save Button, [not implemented]!
+		//Save Button, [not implemented]! TODO
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
 		
@@ -401,11 +451,11 @@ public class Interface {
 		autoRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
 		
 		//Rules name textArea
-		JTextArea aRulesTextArea = new JTextArea();
+		aRulesTextArea = new JTextArea();
 		aRulesTextArea.setEditable(false);
 		
 		//Rules weights textArea
-		JTextArea aWeightTextArea = new JTextArea();
+		aWeightTextArea = new JTextArea();
 		aWeightTextArea.setEditable(false);
 
 		//Scroll for BOTH auto text areas

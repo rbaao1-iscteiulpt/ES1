@@ -14,18 +14,18 @@ import java.util.Scanner;
  */
 public class EMailFNFP_Scanner {
 
-	private static final double SPAM_THRESHOLD = 5.0;
-	private static final double MIN_VALUE = -5.0;
-	
-	private File path_rules;
-	private File path_ham;
-	private File path_spam;
+//	private static final double SPAM_THRESHOLD = 5.0;
+//	private static final double MIN_VALUE = -5.0;
+//	
+//	private File path_rules;
+//	private File path_ham;
+//	private File path_spam;
 	
 
 	public EMailFNFP_Scanner(File path_rules, File path_ham, File path_spam){
-		this.path_rules = path_rules;
-		this.path_ham = path_ham;
-		this.path_spam = path_spam;
+//		this.path_rules = path_rules;
+//		this.path_ham = path_ham;
+//		this.path_spam = path_spam;
 		
 		//testing existence of files
 		
@@ -45,9 +45,9 @@ public class EMailFNFP_Scanner {
 	}
 	
 	public void scan() throws FileNotFoundException{
-		Scanner rules = new Scanner(path_rules);
-		Scanner ham = new Scanner(path_ham);
-		Scanner spam = new Scanner(path_spam);
+//		Scanner rules = new Scanner(path_rules);
+//		Scanner ham = new Scanner(path_ham);
+//		Scanner spam = new Scanner(path_spam);
 		
 	}
 	
