@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Functions {
@@ -164,7 +165,7 @@ public class Functions {
 		}
 		return total;
 	}
-	
+
 	/**
 	 * Chooses the best solution to a Mixed (Professional and Leisure) Mailbox
 	 * 
@@ -173,33 +174,30 @@ public class Functions {
 	 * @throws FileNotFoundException
 	 */
 	public static int choose_solution(String path) throws FileNotFoundException{
-		
-		int n_line = 0;
-		int count = 0;
-		double dif = 0;
-		
+
+		ArrayList<int[]> solution = new ArrayList<int[]>();
+
 		Scanner sc = new Scanner(new File(path));
 
 		while (sc.hasNextLine()) {
-			
+
 			String line = sc.nextLine();
 			String [] temp = line.split(" ");
-			
-			double dif_temp = Math.abs(Double.parseDouble(temp[0])- Double.parseDouble(temp[1]));
-			
-			if (count == 0){
-				dif = dif_temp;
-			}else{
-				if (dif > dif_temp){
-					dif = dif_temp;
-					n_line = count;
-				}
-			}		
-			count++;
+
+			int[] i = new int[2];
+			i[0] = (int) Double.parseDouble(temp[0]);
+			i[1] = (int) Double.parseDouble(temp[1]);
+
+			solution.add(i);
 		}
 		sc.close();
-		
-		return n_line;
+
+		@SuppressWarnings("unchecked")
+		ArrayList<int[]> solution2 = (ArrayList<int[]>) solution.clone();
+
+		Collections.sort(solution, new SolutionComparator());
+
+		return solution2.indexOf(solution.get(0));
 	}
 
 	/**
