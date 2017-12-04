@@ -69,6 +69,16 @@ public class Interface {
 	public Interface() {
 		initialize();
 	}
+	
+	/**
+	 * Clears the manual and automatic configuration fields.
+	 */
+	private void clearFields(){
+		mRulesTextArea.setText("");
+		mWeightTextArea.setText("");
+		aRulesTextArea.setText("");
+		aWeightTextArea.setText("");
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -162,15 +172,13 @@ public class Interface {
 										"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
 										"Invalid File!", JOptionPane.ERROR_MESSAGE);
 								rulesPath.setText("");
-								mRulesTextArea.setText("");
-								mWeightTextArea.setText("");
-								aRulesTextArea.setText("");
-								aWeightTextArea.setText("");
+								clearFields();
 								sc.close();
 								return;
 							}
 						}
 						sc.close();
+						clearFields();
 						rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
 						ArrayList<String> rules = Functions.get_rules(jc.getSelectedFile().getAbsolutePath());
 						ArrayList<String> weights = Functions.get_weights(jc.getSelectedFile().getAbsolutePath());

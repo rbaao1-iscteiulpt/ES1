@@ -70,7 +70,9 @@ public class Functions {
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
 			String [] temp = line.split(" ");
-			weights.add(temp[1]);	
+			if (temp.length < 2) 
+				continue;
+			weights.add(temp[1]);
 		}
 		sc.close();		
 		return weights;
