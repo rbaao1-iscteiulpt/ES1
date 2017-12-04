@@ -43,25 +43,8 @@ public class Interface {
 	private JTextArea mWeightTextArea;
 	private JTextArea aRulesTextArea;
 	private JTextArea aWeightTextArea;
-	protected boolean spamPathOk;
-	protected boolean hamPathOk;
-
-	/**
-	 * Launch the application.
-	 */
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interface window = new Interface();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private boolean spamPathOk;
+	private boolean hamPathOk;
 
 	/**
 	 * Create the application.
@@ -79,7 +62,151 @@ public class Interface {
 		aRulesTextArea.setText("");
 		aWeightTextArea.setText("");
 	}
+	
+	/**
+	 * Changes the rules.cf file path.
+	 * Checks if Rules Path is valid before writing all
+	 * rules and weights in textAreas, if not returns an error message and
+	 * clears the path and textAreas.
+	 */
+	protected void changeRules(){
+		JFileChooser jc = new JFileChooser();
+		int returnVal = jc.showOpenDialog(frame);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			mWeightTextArea.setEditable(false);
+			try {
+				Scanner sc = new Scanner(new File(jc.getSelectedFile().getAbsolutePath()));
+				String line;
+				while (sc.hasNextLine()) {
+					line = sc.nextLine();
+					String[] temp = line.split(" ");
+					if (!(temp.length == 2 || temp.length == 1)) {
+						JOptionPane.showMessageDialog(frame,
+								"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
+								"Invalid File!", JOptionPane.ERROR_MESSAGE);
+						rulesPath.setText("");
+						clearFields();
+						sc.close();
+						return;
+					}
+				}
+				sc.close();
+				clearFields();
+				ArrayList<String> rules = Functions.get_rules(jc.getSelectedFile().getAbsolutePath());
+				ArrayList<String> weights = Functions.get_weights(jc.getSelectedFile().getAbsolutePath());
 
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
+						for (String r : rules) {
+							mRulesTextArea.setText(mRulesTextArea.getText() + r + "\n");
+							aRulesTextArea.setText(aRulesTextArea.getText() + r + "\n");
+						}
+						for (String w : weights) {
+							mWeightTextArea.setText(mWeightTextArea.getText() + w + "\n");
+							aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
+						}
+					}
+				});
+				mWeightTextArea.setEditable(true);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Changes the ham.log file.
+	 */
+	protected void changeHam() {
+		JFileChooser jc = new JFileChooser();
+		int returnVal = jc.showOpenDialog(frame);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			hamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			hamPathOk = true;
+		}
+		
+	}
+	
+	/**
+	 * Changes the spam.log file.
+	 */
+	protected void changeSpam(){
+		JFileChooser jc = new JFileChooser();
+		int returnVal = jc.showOpenDialog(frame);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			spamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			spamPathOk = true;
+		}
+	}
+	
+	/**
+	 * Check if both spam and ham path's are chosen. if not, returns an error
+	 * message.
+	 * 
+	 * @return true if both paths are ok.
+	 */
+	private boolean checkPaths() {
+		if (!spamPathOk && !hamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The spam.log and ham.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!spamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The spam.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!hamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The ham.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * After giving an ArrayList<String> as an argument, checks if all strings
+	 * are numbers between -5 and +5 and if the number of rules equals the
+	 * number of weights. if that's the case, return the same arrayList but as
+	 * Double if not, return a MessageDialog with the correspondent error.
+	 * 
+	 * @param weights
+	 * @return weightsD
+	 */
+	private ArrayList<Double> toDoubleValidWeights(ArrayList<String> weights, int numberRules) {
+		if (weights.size() != numberRules) {
+			JOptionPane.showMessageDialog(frame,
+					"The number of rules are different from the number of Weights\n Check for blank weights in the end of the text area.",
+					"Invalid weights error!", JOptionPane.ERROR_MESSAGE);
+			return null;
+		} else {
+			ArrayList<Double> weightsD = new ArrayList<Double>();
+			for (String w : weights) {
+				try {
+					Double d = Double.parseDouble(w);
+					if (d >= -5 && d <= 5)
+						weightsD.add(d);
+					else {
+						JOptionPane.showMessageDialog(frame,
+								"One or more weight inputs is not valid\nWeights must be between -5 and +5.",
+								"Invalid number error!", JOptionPane.ERROR_MESSAGE);
+						return null;
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(frame,
+							"One or more weight inputs is not a number\nCheck for letters, symbols, blank weights and \",\".",
+							"NaN error!", JOptionPane.ERROR_MESSAGE);
+					return null;
+				}
+			}
+			return weightsD;
+		}
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -143,9 +270,7 @@ public class Interface {
 		rulesPath.setColumns(10);
 
 		/**
-		 * Rules Change Button. Checks if Rules Path is valid before writing all
-		 * rules and weights in textAreas, if not returns an error message and
-		 * clears the path and textAreas.
+		 * Rules Change Button. TODO TESTS
 		 */
 		JButton rulesButton = new JButton("Change");
 		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
@@ -157,49 +282,7 @@ public class Interface {
 		rulesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser jc = new JFileChooser();
-				int returnVal = jc.showOpenDialog(frame);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					mWeightTextArea.setEditable(false);
-					try {
-						Scanner sc = new Scanner(new File(jc.getSelectedFile().getAbsolutePath()));
-						String line;
-						while (sc.hasNextLine()) {
-							line = sc.nextLine();
-							String[] temp = line.split(" ");
-							if (!(temp.length == 2 || temp.length == 1)) {
-								JOptionPane.showMessageDialog(frame,
-										"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
-										"Invalid File!", JOptionPane.ERROR_MESSAGE);
-								rulesPath.setText("");
-								clearFields();
-								sc.close();
-								return;
-							}
-						}
-						sc.close();
-						clearFields();
-						rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
-						ArrayList<String> rules = Functions.get_rules(jc.getSelectedFile().getAbsolutePath());
-						ArrayList<String> weights = Functions.get_weights(jc.getSelectedFile().getAbsolutePath());
-
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								for (String r : rules) {
-									mRulesTextArea.setText(mRulesTextArea.getText() + r + "\n");
-									aRulesTextArea.setText(aRulesTextArea.getText() + r + "\n");
-								}
-								for (String w : weights) {
-									mWeightTextArea.setText(mWeightTextArea.getText() + w + "\n");
-									aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
-								}
-							}
-						});
-						mWeightTextArea.setEditable(true);
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					}
-				}
+				changeRules();
 			}
 		});
 
@@ -229,7 +312,7 @@ public class Interface {
 		hamPath.setColumns(10);
 
 		/**
-		 * Ham change path Button.
+		 * Ham change path Button. TODO TESTS
 		 */
 		JButton hamButton = new JButton("Change");
 		GridBagConstraints gbc_hamButton = new GridBagConstraints();
@@ -241,13 +324,7 @@ public class Interface {
 		hamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser jc = new JFileChooser();
-				int returnVal = jc.showOpenDialog(frame);
-
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					hamPath.setText(jc.getSelectedFile().getAbsolutePath());
-					hamPathOk = true;
-				}
+				changeHam();
 			}
 		});
 
@@ -277,19 +354,13 @@ public class Interface {
 		spamPath.setColumns(10);
 
 		/**
-		 * Spam change path Button.
+		 * Spam change path Button. TODO TESTS
 		 */
 		JButton spamButton = new JButton("Change");
 		spamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser jc = new JFileChooser();
-				int returnVal = jc.showOpenDialog(frame);
-
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					spamPath.setText(jc.getSelectedFile().getAbsolutePath());
-					spamPathOk = true;
-				}
+				changeSpam();
 			}
 		});
 		GridBagConstraints gbc_spamButton = new GridBagConstraints();
@@ -701,70 +772,78 @@ public class Interface {
 			}
 		});
 	}
-
+	
 	/**
-	 * Check if both spam and ham path's are choosen. if not, returns an error
-	 * message.
-	 * 
-	 * @return true if both paths are ok.
+	 * Launch the application.
 	 */
-	protected boolean checkPaths() {
-		if (!spamPathOk && !hamPathOk) {
-			JOptionPane.showMessageDialog(frame, "The spam.log and ham.log path are missing", "File not found!",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		if (!spamPathOk) {
-			JOptionPane.showMessageDialog(frame, "The spam.log path are missing", "File not found!",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		if (!hamPathOk) {
-			JOptionPane.showMessageDialog(frame, "The ham.log path are missing", "File not found!",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		return true;
-	}
 
-	/**
-	 * 
-	 * After giving an ArrayList<String> as an argument, checks if all strings
-	 * are numbers between -5 and +5 and if the number of rules equals the
-	 * number of weights. if that's the case, return the same arrayList but as
-	 * Double if not, return a MessageDialog with the correspondent error.
-	 * 
-	 * @param weights
-	 * @return weightsD
-	 */
-	private ArrayList<Double> toDoubleValidWeights(ArrayList<String> weights, int numberRules) {
-		if (weights.size() != numberRules) {
-			JOptionPane.showMessageDialog(frame,
-					"The number of rules are different from the number of Weights\n Check for blank weights in the end of the text area.",
-					"Invalid weights error!", JOptionPane.ERROR_MESSAGE);
-			return null;
-		} else {
-			ArrayList<Double> weightsD = new ArrayList<Double>();
-			for (String w : weights) {
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
 				try {
-					Double d = Double.parseDouble(w);
-					if (d >= -5 && d <= 5)
-						weightsD.add(d);
-					else {
-						JOptionPane.showMessageDialog(frame,
-								"One or more weight inputs is not valid\nWeights must be between -5 and +5.",
-								"Invalid number error!", JOptionPane.ERROR_MESSAGE);
-						return null;
-					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(frame,
-							"One or more weight inputs is not a number\nCheck for letters, symbols, blank weights and \",\".",
-							"NaN error!", JOptionPane.ERROR_MESSAGE);
-					return null;
+					Interface window = new Interface();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-			return weightsD;
-		}
+		});
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public JTextField getRulesPath() {
+		return rulesPath;
+	}
+
+	public JTextField getHamPath() {
+		return hamPath;
+	}
+
+	public JTextField getSpamPath() {
+		return spamPath;
+	}
+
+	public JTextField getmFalsePosField() {
+		return mFalsePosField;
+	}
+
+	public JTextField getmFalseNegField() {
+		return mFalseNegField;
+	}
+
+	public JTextField getaFalsePositiveField() {
+		return aFalsePositiveField;
+	}
+
+	public JTextField getaFalseNegativeField() {
+		return aFalseNegativeField;
+	}
+
+	public JTextArea getmRulesTextArea() {
+		return mRulesTextArea;
+	}
+
+	public JTextArea getmWeightTextArea() {
+		return mWeightTextArea;
+	}
+
+	public JTextArea getaRulesTextArea() {
+		return aRulesTextArea;
+	}
+
+	public JTextArea getaWeightTextArea() {
+		return aWeightTextArea;
+	}
+
+	public boolean isSpamPathOk() {
+		return spamPathOk;
+	}
+
+	public boolean isHamPathOk() {
+		return hamPathOk;
 	}
 
 }

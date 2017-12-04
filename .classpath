@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="jMetal/jmetal-core-5.3.jar"/>
 	<classpathentry kind="lib" path="jMetal/jmetal-exec-5.3.jar"/>
 	<classpathentry kind="lib" path="jMetal/jmetal-problem-5.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

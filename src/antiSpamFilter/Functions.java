@@ -13,7 +13,6 @@ public class Functions {
 	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
 	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
 	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
-	private static String solution_path = "experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs";
 
 	/**
 	 * Counts the number of lines in the file rules.cf, which corresponds to the number of rules
