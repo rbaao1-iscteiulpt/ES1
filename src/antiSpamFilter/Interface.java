@@ -6,16 +6,19 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -40,6 +43,8 @@ public class Interface {
 	private JTextArea mWeightTextArea;
 	private JTextArea aRulesTextArea;
 	private JTextArea aWeightTextArea;
+	protected boolean spamPathOk;
+	protected boolean hamPathOk;
 	
 	/**
 	 * Launch the application.
@@ -118,6 +123,8 @@ public class Interface {
 		
 		/**
 		 * Rules Change Button.
+		 * Checks if Rules Path is valid before writing all rules and weights in textAreas, 
+		 * if not returns an error message and clears the path and textAreas.
 		 */
 		JButton rulesButton = new JButton("Change");
 		rulesButton.addActionListener(new ActionListener() {
@@ -125,29 +132,49 @@ public class Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser jc = new JFileChooser();
 				int returnVal = jc.showOpenDialog(frame);
-
-			       if (returnVal == JFileChooser.APPROVE_OPTION) {
-			    	   rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
-			    	   try {
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					mWeightTextArea.setEditable(false);
+					try {
+						Scanner sc = new Scanner(new File(jc.getSelectedFile().getAbsolutePath()));
+						String line;
+						while (sc.hasNextLine()) {
+							line = sc.nextLine();
+							String [] temp = line.split(" ");
+							if(!(temp.length == 2 || temp.length == 1)) {
+								JOptionPane.showMessageDialog(frame,
+										"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
+										"Invalid File!", JOptionPane.ERROR_MESSAGE);
+								rulesPath.setText("");
+								mRulesTextArea.setText("");
+								mWeightTextArea.setText("");
+								aRulesTextArea.setText("");
+								aWeightTextArea.setText("");
+								sc.close();
+								return;
+							}
+						}
+						sc.close();
+						rulesPath.setText(jc.getSelectedFile().getAbsolutePath());
 						ArrayList<String> rules = Functions.get_rules(jc.getSelectedFile().getAbsolutePath());
 						ArrayList<String> weights = Functions.get_weights(jc.getSelectedFile().getAbsolutePath());
-						
-							SwingUtilities.invokeLater(new Runnable(){
-								public void run() {
-									for (String r: rules){
-										mRulesTextArea.setText(mRulesTextArea.getText() + r + "\n");
-										aRulesTextArea.setText(aRulesTextArea.getText() + r + "\n");
-									}
-									for (String w: weights){
-										mWeightTextArea.setText(mWeightTextArea.getText() + w + "\n");
-										aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
-									}
+
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								for (String r : rules) {
+									mRulesTextArea.setText(mRulesTextArea.getText() + r + "\n");
+									aRulesTextArea.setText(aRulesTextArea.getText() + r + "\n");
 								}
-							});
-						}catch (FileNotFoundException e) {
+								for (String w : weights) {
+									mWeightTextArea.setText(mWeightTextArea.getText() + w + "\n");
+									aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
+								}
+							}
+						});
+						mWeightTextArea.setEditable(true);
+					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
-			       }
+				}
 			}
 		});
 		
@@ -196,6 +223,7 @@ public class Interface {
 
 			       if (returnVal == JFileChooser.APPROVE_OPTION) {
 			    	   hamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			    	   hamPathOk = true;
 			       }
 			}
 		});
@@ -243,6 +271,7 @@ public class Interface {
 
 			       if (returnVal == JFileChooser.APPROVE_OPTION) {
 			    	   spamPath.setText(jc.getSelectedFile().getAbsolutePath());
+			    	   spamPathOk = true;
 			       }
 			}
 		});
@@ -360,6 +389,7 @@ public class Interface {
 		 * [Manual] Rules weights textArea (editable)
 		 */
 		mWeightTextArea = new JTextArea();
+		mWeightTextArea.setEditable(false);
 		
 		/**
 		 * [Manual] Scroll for BOTH manual textAreas
@@ -391,37 +421,36 @@ public class Interface {
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		/**
-		 * Test Button
+		 * Test Button 
 		 */
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
 		testButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String[] allRules = mRulesTextArea.getText().split("\n");
-					ArrayList<String> rules = new ArrayList<String>(Arrays.asList(allRules));
-					
-					String[] allWeights = mWeightTextArea.getText().split("\n");
-					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
-					ArrayList<Double> weightsD = new ArrayList<Double>();
-					for (String w : weights) {
-						weightsD.add(Double.parseDouble(w));
+				if (checkPaths()) {
+					try {
+						String[] allRules = mRulesTextArea.getText().split("\n");
+						ArrayList<String> rules = new ArrayList<String>(Arrays.asList(allRules));
+
+						String[] allWeights = mWeightTextArea.getText().split("\n");
+						ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
+						ArrayList<Double> weightsD = toDoubleValidWeights(weights, rules.size());
+						if (weightsD != null) {
+							mFalsePosField.setText((Functions.evaluate_solution(0, rules, weightsD,
+									Functions.file_to_array(hamPath.getText()))).toString());
+							mFalseNegField.setText((Functions.evaluate_solution(1, rules, weightsD,
+									Functions.file_to_array(spamPath.getText()))).toString());
+						}
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
 					}
-					
-					mFalsePosField.setText((Functions.evaluate_solution(0, rules, weightsD,
-							Functions.file_to_array(hamPath.getText()))).toString());
-					mFalseNegField.setText((Functions.evaluate_solution(1, rules, weightsD,
-							Functions.file_to_array(spamPath.getText()))).toString());
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
 				}
 			}
 		});
 		
 		/**
-		 * Save Button, [not implemented]!
+		 * Save Button
 		 */
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
@@ -432,11 +461,9 @@ public class Interface {
 				try {
 					String[] allWeights = mWeightTextArea.getText().split("\n");
 					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
-					ArrayList<Double> weightsD = new ArrayList<Double>();
-					for (String w : weights) {
-						weightsD.add(Double.parseDouble(w));
-					}
-					Functions.write_weights(rulesPath.getText(), weightsD);
+					ArrayList<Double> weightsD = toDoubleValidWeights(weights, mRulesTextArea.getText().split("\n").length);
+					if (!weightsD.equals(null))
+						Functions.write_weights(rulesPath.getText(), weightsD);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -585,6 +612,67 @@ public class Interface {
 		 */
 		JButton aSaveButton = new JButton("Save");
 		autoButtonsPanel.add(aSaveButton);
+	}
+	
+	protected boolean checkPaths() {
+		if (!spamPathOk && !hamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The spam.log and ham.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!spamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The spam.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!hamPathOk) {
+			JOptionPane.showMessageDialog(frame, "The ham.log path are missing", "File not found!",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * After giving an ArrayList<String> as an argument,
+	 * checks if all strings are numbers between -5 and +5 and 
+	 * if the number of rules equals the number of weights.
+	 * if that's the case, return the same arrayList but as Double
+	 * if not, return a MessageDialog with the correspondent error.
+	 * 
+	 * @param weights
+	 * @return weightsD
+	 */
+	
+	private ArrayList<Double> toDoubleValidWeights(ArrayList<String> weights, int numberRules) {
+		if (weights.size() != numberRules) {
+			JOptionPane.showMessageDialog(frame,
+					"The number of rules are different from the number of Weights\n Check for blank weights in the end of the text area.",
+					"Invalid weights error!", JOptionPane.ERROR_MESSAGE);
+			return null;
+		} else {
+			ArrayList<Double> weightsD = new ArrayList<Double>();
+			for (String w : weights) {
+				try {
+					Double d = Double.parseDouble(w);
+					if (d >= -5 && d <= 5)
+						weightsD.add(d);
+					else {
+						JOptionPane.showMessageDialog(frame,
+								"One or more weight inputs is not valid\nWeights must be between -5 and +5.",
+								"Invalid number error!", JOptionPane.ERROR_MESSAGE);
+						return null;
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(frame,
+							"One or more weight inputs is not a number\nCheck for letters, symbols, blank weights and \",\".",
+							"NaN error!", JOptionPane.ERROR_MESSAGE);
+					return null;
+				}
+			}
+			return weightsD;
+		}
 	}
 
 }
