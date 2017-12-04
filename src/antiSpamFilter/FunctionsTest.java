@@ -116,7 +116,6 @@ public class FunctionsTest {
 	@Test
 	public final void testChoose_solution() throws FileNotFoundException {
 		int n_solution = Functions.choose_solution(NSGAII_1);
-		System.out.println(n_solution);
 		
 		assertSame("failure - should be same", 2, n_solution);
 	}
