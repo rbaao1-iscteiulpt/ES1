@@ -95,8 +95,13 @@ public class Functions {
 
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
+			System.out.println(line);
 			String [] temp = line.split(" ");
-			rules.add(temp[0] + " " + solution.get(count).toString());	
+			
+			if (temp[0].equals(""))
+				continue;
+			
+			rules.add(temp[0] + " " + solution.get(count).toString());
 			count++;
 		}
 
