@@ -45,11 +45,11 @@ public class Interface {
 	private JTextArea aWeightTextArea;
 	protected boolean spamPathOk;
 	protected boolean hamPathOk;
-	
+
 	/**
 	 * Launch the application.
 	 */
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,7 +74,7 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+
 		/**
 		 * Frame creation.
 		 */
@@ -82,20 +82,20 @@ public class Interface {
 		frame.setBounds(100, 100, 750, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(3, 0, 5, 2));
-		
+
 		/**
-		 * Panel with all paths and change buttons (Rules, Ham and Spam).
-		 * Each line as a Label, Field and correspondent button.
-		 */	
+		 * Panel with all paths and change buttons (Rules, Ham and Spam). Each
+		 * line as a Label, Field and correspondent button.
+		 */
 		JPanel pathPanel = new JPanel();
 		frame.getContentPane().add(pathPanel);
 		GridBagLayout gbl_pathPanel = new GridBagLayout();
-		gbl_pathPanel.columnWidths = new int[]{120, 528, 86, 0};
-		gbl_pathPanel.rowHeights = new int[]{34, 34, 34, 0};
-		gbl_pathPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pathPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pathPanel.columnWidths = new int[] { 120, 528, 86, 0 };
+		gbl_pathPanel.rowHeights = new int[] { 34, 34, 34, 0 };
+		gbl_pathPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_pathPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pathPanel.setLayout(gbl_pathPanel);
-		
+
 		/**
 		 * Rules label.
 		 */
@@ -107,7 +107,7 @@ public class Interface {
 		gbc_rulesLabel.gridx = 0;
 		gbc_rulesLabel.gridy = 0;
 		pathPanel.add(rulesLabel, gbc_rulesLabel);
-		
+
 		/**
 		 * Rules path Field.
 		 */
@@ -120,11 +120,11 @@ public class Interface {
 		gbc_rulesPath.gridy = 0;
 		pathPanel.add(rulesPath, gbc_rulesPath);
 		rulesPath.setColumns(10);
-		
+
 		/**
-		 * Rules Change Button.
-		 * Checks if Rules Path is valid before writing all rules and weights in textAreas, 
-		 * if not returns an error message and clears the path and textAreas.
+		 * Rules Change Button. Checks if Rules Path is valid before writing all
+		 * rules and weights in textAreas, if not returns an error message and
+		 * clears the path and textAreas.
 		 */
 		JButton rulesButton = new JButton("Change");
 		rulesButton.addActionListener(new ActionListener() {
@@ -139,8 +139,8 @@ public class Interface {
 						String line;
 						while (sc.hasNextLine()) {
 							line = sc.nextLine();
-							String [] temp = line.split(" ");
-							if(!(temp.length == 2 || temp.length == 1)) {
+							String[] temp = line.split(" ");
+							if (!(temp.length == 2 || temp.length == 1)) {
 								JOptionPane.showMessageDialog(frame,
 										"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
 										"Invalid File!", JOptionPane.ERROR_MESSAGE);
@@ -177,15 +177,14 @@ public class Interface {
 				}
 			}
 		});
-		
+
 		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
 		gbc_rulesButton.fill = GridBagConstraints.BOTH;
 		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
 		gbc_rulesButton.gridx = 2;
 		gbc_rulesButton.gridy = 0;
 		pathPanel.add(rulesButton, gbc_rulesButton);
-		
-		
+
 		/**
 		 * Ham Label.
 		 */
@@ -197,7 +196,7 @@ public class Interface {
 		gbc_hamLabel.gridx = 0;
 		gbc_hamLabel.gridy = 1;
 		pathPanel.add(hamLabel, gbc_hamLabel);
-		
+
 		/**
 		 * Ham path Field.
 		 */
@@ -210,7 +209,7 @@ public class Interface {
 		gbc_hamPath.gridy = 1;
 		pathPanel.add(hamPath, gbc_hamPath);
 		hamPath.setColumns(10);
-		
+
 		/**
 		 * Ham change path Button.
 		 */
@@ -221,10 +220,10 @@ public class Interface {
 				JFileChooser jc = new JFileChooser();
 				int returnVal = jc.showOpenDialog(frame);
 
-			       if (returnVal == JFileChooser.APPROVE_OPTION) {
-			    	   hamPath.setText(jc.getSelectedFile().getAbsolutePath());
-			    	   hamPathOk = true;
-			       }
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					hamPath.setText(jc.getSelectedFile().getAbsolutePath());
+					hamPathOk = true;
+				}
 			}
 		});
 		GridBagConstraints gbc_hamButton = new GridBagConstraints();
@@ -233,7 +232,7 @@ public class Interface {
 		gbc_hamButton.gridx = 2;
 		gbc_hamButton.gridy = 1;
 		pathPanel.add(hamButton, gbc_hamButton);
-		
+
 		/**
 		 * Spam Label.
 		 */
@@ -245,7 +244,7 @@ public class Interface {
 		gbc_spamLabel.gridx = 0;
 		gbc_spamLabel.gridy = 2;
 		pathPanel.add(spamLabel, gbc_spamLabel);
-		
+
 		/**
 		 * Spam path Field.
 		 */
@@ -258,7 +257,7 @@ public class Interface {
 		gbc_spamPath.gridy = 2;
 		pathPanel.add(spamPath, gbc_spamPath);
 		spamPath.setColumns(10);
-		
+
 		/**
 		 * Spam change path Button.
 		 */
@@ -269,10 +268,10 @@ public class Interface {
 				JFileChooser jc = new JFileChooser();
 				int returnVal = jc.showOpenDialog(frame);
 
-			       if (returnVal == JFileChooser.APPROVE_OPTION) {
-			    	   spamPath.setText(jc.getSelectedFile().getAbsolutePath());
-			    	   spamPathOk = true;
-			       }
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					spamPath.setText(jc.getSelectedFile().getAbsolutePath());
+					spamPathOk = true;
+				}
 			}
 		});
 		GridBagConstraints gbc_spamButton = new GridBagConstraints();
@@ -280,21 +279,21 @@ public class Interface {
 		gbc_spamButton.gridx = 2;
 		gbc_spamButton.gridy = 2;
 		pathPanel.add(spamButton, gbc_spamButton);
-		
+
 		/**
-		 * Panel for manual interface.
-		 * Has the result panel, 2 textAreas (for rules names & his weights), and buttons.
-		 * The Weights textArea it's editable
+		 * Panel for manual interface. Has the result panel, 2 textAreas (for
+		 * rules names & his weights), and buttons. The Weights textArea it's
+		 * editable
 		 */
 		JPanel manualPanel = new JPanel();
 		frame.getContentPane().add(manualPanel);
 		GridBagLayout gbl_manualPanel = new GridBagLayout();
-		gbl_manualPanel.columnWidths = new int[]{119, 527, 86, 0};
-		gbl_manualPanel.rowHeights = new int[]{102, 0};
-		gbl_manualPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_manualPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_manualPanel.columnWidths = new int[] { 119, 527, 86, 0 };
+		gbl_manualPanel.rowHeights = new int[] { 102, 0 };
+		gbl_manualPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_manualPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		manualPanel.setLayout(gbl_manualPanel);
-		
+
 		/**
 		 * [Manual] Results Panel.
 		 */
@@ -306,12 +305,12 @@ public class Interface {
 		gbc_manResultsPanel.gridy = 0;
 		manualPanel.add(manResultsPanel, gbc_manResultsPanel);
 		GridBagLayout gbl_manResultsPanel = new GridBagLayout();
-		gbl_manResultsPanel.columnWidths = new int[]{60, 56, 0};
-		gbl_manResultsPanel.rowHeights = new int[]{51, 51, 0};
-		gbl_manResultsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_manResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_manResultsPanel.columnWidths = new int[] { 60, 56, 0 };
+		gbl_manResultsPanel.rowHeights = new int[] { 51, 51, 0 };
+		gbl_manResultsPanel.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gbl_manResultsPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		manResultsPanel.setLayout(gbl_manResultsPanel);
-		
+
 		/**
 		 * [Manual] False Positive Label
 		 */
@@ -324,7 +323,7 @@ public class Interface {
 		gbc_mFalsePosLabel.gridx = 0;
 		gbc_mFalsePosLabel.gridy = 0;
 		manResultsPanel.add(mFalsePosLabel, gbc_mFalsePosLabel);
-		
+
 		/**
 		 * [Manual] False Positive values
 		 */
@@ -339,7 +338,7 @@ public class Interface {
 		gbc_mFalsePosField.gridy = 0;
 		manResultsPanel.add(mFalsePosField, gbc_mFalsePosField);
 		mFalsePosField.setColumns(10);
-		
+
 		/**
 		 * [Manual] False Negative Label
 		 */
@@ -352,7 +351,7 @@ public class Interface {
 		gbc_mFalseNegLabel.gridx = 0;
 		gbc_mFalseNegLabel.gridy = 1;
 		manResultsPanel.add(mFalseNegLabel, gbc_mFalseNegLabel);
-		
+
 		/**
 		 * [Manual] False Negative values
 		 */
@@ -366,7 +365,7 @@ public class Interface {
 		gbc_mFalseNegField.gridy = 1;
 		manResultsPanel.add(mFalseNegField, gbc_mFalseNegField);
 		mFalseNegField.setColumns(10);
-		
+
 		/**
 		 * [Manual] Panel for the 2 text areas(Rules name & respective weights)
 		 */
@@ -378,37 +377,39 @@ public class Interface {
 		gbc_manRulesPanel.gridy = 0;
 		manualPanel.add(manRulesPanel, gbc_manRulesPanel);
 		manRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
-		
+
 		/**
 		 * [Manual] Rules name textArea
 		 */
 		mRulesTextArea = new JTextArea();
 		mRulesTextArea.setEditable(false);
-		
+
 		/**
 		 * [Manual] Rules weights textArea (editable)
 		 */
 		mWeightTextArea = new JTextArea();
 		mWeightTextArea.setEditable(false);
-		
+
 		/**
-		 * [Manual] Scroll for BOTH manual textAreas
-		 * Redirects Wheels events from Rules textArea to Weight textArea.
-		 * Keep in mind that both text areas must be the same Height to scrolls to work
+		 * [Manual] Scroll for BOTH manual textAreas Redirects Wheels events
+		 * from Rules textArea to Weight textArea. Keep in mind that both text
+		 * areas must be the same Height to scrolls to work
 		 */
-		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		mRuleScrollPane.getHorizontalScrollBar().setModel(mWeightScrollPane.getHorizontalScrollBar().getModel());
 		mRuleScrollPane.getVerticalScrollBar().setModel(mWeightScrollPane.getVerticalScrollBar().getModel());
 		mRuleScrollPane.setWheelScrollingEnabled(false);
 		mRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
-		    public void mouseWheelMoved(MouseWheelEvent e) {
-		        mWeightScrollPane.dispatchEvent(e);
-		    }
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				mWeightScrollPane.dispatchEvent(e);
+			}
 		});
 		manRulesPanel.add(mRuleScrollPane);
 		manRulesPanel.add(mWeightScrollPane);
-		
+
 		/**
 		 * [Manual] Buttons Panel
 		 */
@@ -419,9 +420,9 @@ public class Interface {
 		gbc_manButtonsPanel.gridy = 0;
 		manualPanel.add(manButtonsPanel, gbc_manButtonsPanel);
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
-		
+
 		/**
-		 * Test Button 
+		 * Test Button
 		 */
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
@@ -448,41 +449,42 @@ public class Interface {
 				}
 			}
 		});
-		
+
 		/**
-		 * Save Button
+		 * [Manual] Save Button
 		 */
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
-		
+
 		mSaveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					String[] allWeights = mWeightTextArea.getText().split("\n");
 					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
-					ArrayList<Double> weightsD = toDoubleValidWeights(weights, mRulesTextArea.getText().split("\n").length);
-					if (!weightsD.equals(null))
+					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
+							mRulesTextArea.getText().split("\n").length);
+					if (weightsD != null)
 						Functions.write_weights(rulesPath.getText(), weightsD);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		/**
-		 * Panel for Auto interface.
-		 * Has the result panel, 2 text areas (for rules names & his weights), and buttons.
+		 * Panel for Auto interface. Has the result panel, 2 text areas (for
+		 * rules names & his weights), and buttons.
 		 */
 		JPanel autoPanel = new JPanel();
 		frame.getContentPane().add(autoPanel);
 		GridBagLayout gbl_autoPanel = new GridBagLayout();
-		gbl_autoPanel.columnWidths = new int[]{116, 527, 75, 0};
-		gbl_autoPanel.rowHeights = new int[]{102, 0};
-		gbl_autoPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_autoPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_autoPanel.columnWidths = new int[] { 116, 527, 75, 0 };
+		gbl_autoPanel.rowHeights = new int[] { 102, 0 };
+		gbl_autoPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_autoPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		autoPanel.setLayout(gbl_autoPanel);
-		
+
 		/**
 		 * [Auto] Results panel.
 		 */
@@ -494,12 +496,12 @@ public class Interface {
 		gbc_autoResultsPanel.gridy = 0;
 		autoPanel.add(autoResultsPanel, gbc_autoResultsPanel);
 		GridBagLayout gbl_autoResultsPanel = new GridBagLayout();
-		gbl_autoResultsPanel.columnWidths = new int[]{60, 56, 0};
-		gbl_autoResultsPanel.rowHeights = new int[]{51, 51, 0};
-		gbl_autoResultsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_autoResultsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_autoResultsPanel.columnWidths = new int[] { 60, 56, 0 };
+		gbl_autoResultsPanel.rowHeights = new int[] { 51, 51, 0 };
+		gbl_autoResultsPanel.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gbl_autoResultsPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		autoResultsPanel.setLayout(gbl_autoResultsPanel);
-		
+
 		/**
 		 * [Auto] False Positive label.
 		 */
@@ -512,7 +514,7 @@ public class Interface {
 		gbc_aFalsePositiveLabel.gridx = 0;
 		gbc_aFalsePositiveLabel.gridy = 0;
 		autoResultsPanel.add(aFalsePositiveLabel, gbc_aFalsePositiveLabel);
-		
+
 		/**
 		 * [Auto] False Positive values.
 		 */
@@ -527,7 +529,7 @@ public class Interface {
 		gbc_aFalsePositiveField.gridy = 0;
 		autoResultsPanel.add(aFalsePositiveField, gbc_aFalsePositiveField);
 		aFalsePositiveField.setColumns(10);
-		
+
 		/**
 		 * [Auto] False Negative Label.
 		 */
@@ -540,7 +542,7 @@ public class Interface {
 		gbc_aFalseNegativeLabel.gridx = 0;
 		gbc_aFalseNegativeLabel.gridy = 1;
 		autoResultsPanel.add(aFalseNegativeLabel, gbc_aFalseNegativeLabel);
-		
+
 		/**
 		 * [Auto] False Negative values.
 		 */
@@ -554,7 +556,7 @@ public class Interface {
 		gbc_aFalseNegativeField.gridy = 1;
 		autoResultsPanel.add(aFalseNegativeField, gbc_aFalseNegativeField);
 		aFalseNegativeField.setColumns(10);
-		
+
 		/**
 		 * [Auto] Panel for the 2 text areas(Rules name & respective weights).
 		 */
@@ -566,30 +568,32 @@ public class Interface {
 		gbc_autoRulesPanel.gridy = 0;
 		autoPanel.add(autoRulesPanel, gbc_autoRulesPanel);
 		autoRulesPanel.setLayout(new GridLayout(0, 2, 2, 0));
-		
+
 		/**
 		 * [Auto] Rules name textArea.
 		 */
 		aRulesTextArea = new JTextArea();
 		aRulesTextArea.setEditable(false);
-		
-		/** 
+
+		/**
 		 * [Auto] Rules weights textArea.
 		 */
 		aWeightTextArea = new JTextArea();
 		aWeightTextArea.setEditable(false);
 
 		/**
-		 * [Auto] Scroll for BOTH auto text areas.
-		 * Keep in mind that both text areas must be the same Height to scrolls to work
+		 * [Auto] Scroll for BOTH auto text areas. Keep in mind that both text
+		 * areas must be the same Height to scrolls to work
 		 */
-		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
 		aRuleScrollPane.getVerticalScrollBar().setModel(aWeightScrollPane.getVerticalScrollBar().getModel());
 		autoRulesPanel.add(aRuleScrollPane);
 		autoRulesPanel.add(aWeightScrollPane);
-		
+
 		/**
 		 * [Auto] Buttons panel.
 		 */
@@ -600,20 +604,43 @@ public class Interface {
 		gbc_autoButtonsPanel.gridy = 0;
 		autoPanel.add(autoButtonsPanel, gbc_autoButtonsPanel);
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
-		
+
 		/**
-		 * [Auto] Generate Button, [Not implemented]!
+		 * [Auto] Generate Button, [Not implemented]! TODO
 		 */
 		JButton generateButton = new JButton("Generate");
 		autoButtonsPanel.add(generateButton);
-		
+		generateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (checkPaths()) {
+					//Generate weights
+				}
+			}
+		});
+
 		/**
-		 * [Auto] Save Button, [Not implemented]!
+		 * [Auto] Save Button, [Not implemented]! TODO
 		 */
 		JButton aSaveButton = new JButton("Save");
 		autoButtonsPanel.add(aSaveButton);
+		aSaveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String[] allWeights = aWeightTextArea.getText().split("\n");
+					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
+					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
+							aRulesTextArea.getText().split("\n").length);
+					if (weightsD != null)
+						Functions.write_weights(rulesPath.getText(), weightsD);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
 	protected boolean checkPaths() {
 		if (!spamPathOk && !hamPathOk) {
 			JOptionPane.showMessageDialog(frame, "The spam.log and ham.log path are missing", "File not found!",
@@ -635,16 +662,15 @@ public class Interface {
 
 	/**
 	 * 
-	 * After giving an ArrayList<String> as an argument,
-	 * checks if all strings are numbers between -5 and +5 and 
-	 * if the number of rules equals the number of weights.
-	 * if that's the case, return the same arrayList but as Double
-	 * if not, return a MessageDialog with the correspondent error.
+	 * After giving an ArrayList<String> as an argument, checks if all strings
+	 * are numbers between -5 and +5 and if the number of rules equals the
+	 * number of weights. if that's the case, return the same arrayList but as
+	 * Double if not, return a MessageDialog with the correspondent error.
 	 * 
 	 * @param weights
 	 * @return weightsD
 	 */
-	
+
 	private ArrayList<Double> toDoubleValidWeights(ArrayList<String> weights, int numberRules) {
 		if (weights.size() != numberRules) {
 			JOptionPane.showMessageDialog(frame,
