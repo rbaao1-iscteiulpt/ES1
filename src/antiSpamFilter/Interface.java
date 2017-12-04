@@ -270,7 +270,7 @@ public class Interface {
 		rulesPath.setColumns(10);
 
 		/**
-		 * Rules Change Button. TODO TESTS
+		 * Rules Change Button.
 		 */
 		JButton rulesButton = new JButton("Change");
 		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
@@ -312,7 +312,7 @@ public class Interface {
 		hamPath.setColumns(10);
 
 		/**
-		 * Ham change path Button. TODO TESTS
+		 * Ham change path Button.
 		 */
 		JButton hamButton = new JButton("Change");
 		GridBagConstraints gbc_hamButton = new GridBagConstraints();
@@ -354,7 +354,7 @@ public class Interface {
 		spamPath.setColumns(10);
 
 		/**
-		 * Spam change path Button. TODO TESTS
+		 * Spam change path Button.
 		 */
 		JButton spamButton = new JButton("Change");
 		spamButton.addActionListener(new ActionListener() {
@@ -533,7 +533,7 @@ public class Interface {
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 
 		/**
-		 * Test Button
+		 * Test Button TODO Tests
 		 */
 		JButton testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
@@ -562,7 +562,7 @@ public class Interface {
 		});
 
 		/**
-		 * [Manual] Save Button
+		 * [Manual] Save Button TODO Tests
 		 */
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
