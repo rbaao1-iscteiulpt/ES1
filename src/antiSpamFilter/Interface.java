@@ -79,16 +79,27 @@ public class Interface {
 		 * Frame creation.
 		 */
 		frame = new JFrame();
-		frame.setBounds(100, 100, 750, 350);
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 750, 411);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(3, 0, 5, 2));
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] { 734, 0 };
+		gridBagLayout.rowHeights = new int[] { 70, 31, 70, 25, 70, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		frame.getContentPane().setLayout(gridBagLayout);
 
 		/**
 		 * Panel with all paths and change buttons (Rules, Ham and Spam). Each
 		 * line as a Label, Field and correspondent button.
 		 */
 		JPanel pathPanel = new JPanel();
-		frame.getContentPane().add(pathPanel);
+		GridBagConstraints gbc_pathPanel = new GridBagConstraints();
+		gbc_pathPanel.fill = GridBagConstraints.BOTH;
+		gbc_pathPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_pathPanel.gridx = 0;
+		gbc_pathPanel.gridy = 0;
+		frame.getContentPane().add(pathPanel, gbc_pathPanel);
 		GridBagLayout gbl_pathPanel = new GridBagLayout();
 		gbl_pathPanel.columnWidths = new int[] { 120, 528, 86, 0 };
 		gbl_pathPanel.rowHeights = new int[] { 34, 34, 34, 0 };
@@ -127,6 +138,12 @@ public class Interface {
 		 * clears the path and textAreas.
 		 */
 		JButton rulesButton = new JButton("Change");
+		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
+		gbc_rulesButton.fill = GridBagConstraints.BOTH;
+		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
+		gbc_rulesButton.gridx = 2;
+		gbc_rulesButton.gridy = 0;
+		pathPanel.add(rulesButton, gbc_rulesButton);
 		rulesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -178,13 +195,6 @@ public class Interface {
 			}
 		});
 
-		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
-		gbc_rulesButton.fill = GridBagConstraints.BOTH;
-		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
-		gbc_rulesButton.gridx = 2;
-		gbc_rulesButton.gridy = 0;
-		pathPanel.add(rulesButton, gbc_rulesButton);
-
 		/**
 		 * Ham Label.
 		 */
@@ -214,6 +224,12 @@ public class Interface {
 		 * Ham change path Button.
 		 */
 		JButton hamButton = new JButton("Change");
+		GridBagConstraints gbc_hamButton = new GridBagConstraints();
+		gbc_hamButton.fill = GridBagConstraints.BOTH;
+		gbc_hamButton.insets = new Insets(0, 0, 5, 0);
+		gbc_hamButton.gridx = 2;
+		gbc_hamButton.gridy = 1;
+		pathPanel.add(hamButton, gbc_hamButton);
 		hamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -226,12 +242,6 @@ public class Interface {
 				}
 			}
 		});
-		GridBagConstraints gbc_hamButton = new GridBagConstraints();
-		gbc_hamButton.fill = GridBagConstraints.BOTH;
-		gbc_hamButton.insets = new Insets(0, 0, 5, 0);
-		gbc_hamButton.gridx = 2;
-		gbc_hamButton.gridy = 1;
-		pathPanel.add(hamButton, gbc_hamButton);
 
 		/**
 		 * Spam Label.
@@ -281,12 +291,34 @@ public class Interface {
 		pathPanel.add(spamButton, gbc_spamButton);
 
 		/**
+		 * [Manual] Panel which contains a label
+		 */
+		JPanel manual = new JPanel();
+		GridBagConstraints gbc_manual = new GridBagConstraints();
+		gbc_manual.fill = GridBagConstraints.BOTH;
+		gbc_manual.insets = new Insets(0, 0, 5, 0);
+		gbc_manual.gridx = 0;
+		gbc_manual.gridy = 1;
+		frame.getContentPane().add(manual, gbc_manual);
+
+		/**
+		 * Label to identify the Manual Implementation
+		 */
+		JLabel manualLabel = new JLabel("Manual Implementation");
+		manual.add(manualLabel);
+
+		/**
 		 * Panel for manual interface. Has the result panel, 2 textAreas (for
 		 * rules names & his weights), and buttons. The Weights textArea it's
 		 * editable
 		 */
 		JPanel manualPanel = new JPanel();
-		frame.getContentPane().add(manualPanel);
+		GridBagConstraints gbc_manualPanel = new GridBagConstraints();
+		gbc_manualPanel.fill = GridBagConstraints.BOTH;
+		gbc_manualPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_manualPanel.gridx = 0;
+		gbc_manualPanel.gridy = 2;
+		frame.getContentPane().add(manualPanel, gbc_manualPanel);
 		GridBagLayout gbl_manualPanel = new GridBagLayout();
 		gbl_manualPanel.columnWidths = new int[] { 119, 527, 86, 0 };
 		gbl_manualPanel.rowHeights = new int[] { 102, 0 };
@@ -312,7 +344,7 @@ public class Interface {
 		manResultsPanel.setLayout(gbl_manResultsPanel);
 
 		/**
-		 * [Manual] False Positive Label
+		 * [Manual] False Positive Label.
 		 */
 		JLabel mFalsePosLabel = new JLabel("FP:");
 		mFalsePosLabel.setToolTipText("False Positives");
@@ -325,7 +357,7 @@ public class Interface {
 		manResultsPanel.add(mFalsePosLabel, gbc_mFalsePosLabel);
 
 		/**
-		 * [Manual] False Positive values
+		 * [Manual] False Positive values.
 		 */
 		mFalsePosField = new JTextField();
 		mFalsePosField.setEditable(false);
@@ -340,7 +372,7 @@ public class Interface {
 		mFalsePosField.setColumns(10);
 
 		/**
-		 * [Manual] False Negative Label
+		 * [Manual] False Negatives Label.
 		 */
 		JLabel mFalseNegLabel = new JLabel("FN:");
 		mFalseNegLabel.setToolTipText("False Negatives");
@@ -385,7 +417,7 @@ public class Interface {
 		mRulesTextArea.setEditable(false);
 
 		/**
-		 * [Manual] Rules weights textArea (editable)
+		 * [Manual] Rules weights textArea (editable when rules.fc is valid)
 		 */
 		mWeightTextArea = new JTextArea();
 		mWeightTextArea.setEditable(false);
@@ -455,7 +487,6 @@ public class Interface {
 		 */
 		JButton mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
-
 		mSaveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -473,11 +504,33 @@ public class Interface {
 		});
 
 		/**
+		 * [Auto] Panel which contains a label.
+		 */
+
+		JPanel auto = new JPanel();
+		GridBagConstraints gbc_auto = new GridBagConstraints();
+		gbc_auto.fill = GridBagConstraints.BOTH;
+		gbc_auto.insets = new Insets(0, 0, 5, 0);
+		gbc_auto.gridx = 0;
+		gbc_auto.gridy = 3;
+		frame.getContentPane().add(auto, gbc_auto);
+
+		/**
+		 * Label to identify the automatic Implementation.
+		 */
+		JLabel autoLabel = new JLabel("Automatic Implementation");
+		auto.add(autoLabel);
+
+		/**
 		 * Panel for Auto interface. Has the result panel, 2 text areas (for
 		 * rules names & his weights), and buttons.
 		 */
 		JPanel autoPanel = new JPanel();
-		frame.getContentPane().add(autoPanel);
+		GridBagConstraints gbc_autoPanel = new GridBagConstraints();
+		gbc_autoPanel.fill = GridBagConstraints.BOTH;
+		gbc_autoPanel.gridx = 0;
+		gbc_autoPanel.gridy = 4;
+		frame.getContentPane().add(autoPanel, gbc_autoPanel);
 		GridBagLayout gbl_autoPanel = new GridBagLayout();
 		gbl_autoPanel.columnWidths = new int[] { 116, 527, 75, 0 };
 		gbl_autoPanel.rowHeights = new int[] { 102, 0 };
@@ -614,7 +667,7 @@ public class Interface {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkPaths()) {
-					//Generate weights
+					// Generate weights
 				}
 			}
 		});
@@ -641,6 +694,12 @@ public class Interface {
 		});
 	}
 
+	/**
+	 * Check if both spam and ham path's are choosen. if not, returns an error
+	 * message.
+	 * 
+	 * @return true if both paths are ok.
+	 */
 	protected boolean checkPaths() {
 		if (!spamPathOk && !hamPathOk) {
 			JOptionPane.showMessageDialog(frame, "The spam.log and ham.log path are missing", "File not found!",
@@ -670,7 +729,6 @@ public class Interface {
 	 * @param weights
 	 * @return weightsD
 	 */
-
 	private ArrayList<Double> toDoubleValidWeights(ArrayList<String> weights, int numberRules) {
 		if (weights.size() != numberRules) {
 			JOptionPane.showMessageDialog(frame,
