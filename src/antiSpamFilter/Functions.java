@@ -69,8 +69,12 @@ public class Functions {
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
 			String [] temp = line.split(" ");
-			if (temp.length < 2) 
+			if(temp.length == 1) {
+				weights.add("0");
+			}
+			if (temp.length < 2) {
 				continue;
+			}
 			weights.add(temp[1]);
 		}
 		sc.close();		

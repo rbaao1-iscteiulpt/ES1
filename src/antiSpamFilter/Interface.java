@@ -45,6 +45,7 @@ public class Interface {
 	private JTextArea aWeightTextArea;
 	private boolean spamPathOk;
 	private boolean hamPathOk;
+	private JButton testButton;
 
 	/**
 	 * Create the application.
@@ -82,7 +83,7 @@ public class Interface {
 					String[] temp = line.split(" ");
 					if (!(temp.length == 2 || temp.length == 1)) {
 						JOptionPane.showMessageDialog(frame,
-								"The selected file doesn't have 2 columns\nKeep in mind that columns must be separated by a Space",
+								"The selected file doesn't have 1 or 2 columns\nKeep in mind that columns must be separated by a Space",
 								"Invalid File!", JOptionPane.ERROR_MESSAGE);
 						rulesPath.setText("");
 						clearFields();
@@ -125,6 +126,9 @@ public class Interface {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			hamPath.setText(jc.getSelectedFile().getAbsolutePath());
 			hamPathOk = true;
+		} else {
+			hamPath.setText("");
+			hamPathOk = false;
 		}
 		
 	}
@@ -139,6 +143,9 @@ public class Interface {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			spamPath.setText(jc.getSelectedFile().getAbsolutePath());
 			spamPathOk = true;
+		} else {
+			spamPath.setText("");
+			spamPathOk = false;
 		}
 	}
 	
@@ -507,9 +514,9 @@ public class Interface {
 		 * areas must be the same Height to scrolls to work
 		 */
 		JScrollPane mRuleScrollPane = new JScrollPane(mRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollPane mWeightScrollPane = new JScrollPane(mWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		mRuleScrollPane.getHorizontalScrollBar().setModel(mWeightScrollPane.getHorizontalScrollBar().getModel());
 		mRuleScrollPane.getVerticalScrollBar().setModel(mWeightScrollPane.getVerticalScrollBar().getModel());
 		mRuleScrollPane.setWheelScrollingEnabled(false);
@@ -535,7 +542,7 @@ public class Interface {
 		/**
 		 * Test Button TODO Tests
 		 */
-		JButton testButton = new JButton("Test");
+		testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
 		testButton.addActionListener(new ActionListener() {
 			@Override
@@ -844,6 +851,10 @@ public class Interface {
 
 	public boolean isHamPathOk() {
 		return hamPathOk;
+	}
+	
+	public JButton getTestButton() {
+		return testButton;
 	}
 
 }
