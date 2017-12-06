@@ -46,6 +46,7 @@ public class Interface {
 	private boolean spamPathOk;
 	private boolean hamPathOk;
 	private JButton testButton;
+	private JButton mSaveButton;
 
 	/**
 	 * Create the application.
@@ -571,7 +572,7 @@ public class Interface {
 		/**
 		 * [Manual] Save Button TODO Tests
 		 */
-		JButton mSaveButton = new JButton("Save");
+		mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
 		mSaveButton.addActionListener(new ActionListener() {
 			@Override
@@ -855,6 +856,10 @@ public class Interface {
 	
 	public JButton getTestButton() {
 		return testButton;
+	}
+	
+	public JButton getMSaveButton() {
+		return mSaveButton;
 	}
 
 }
