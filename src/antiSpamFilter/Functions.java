@@ -66,7 +66,13 @@ public class Functions {
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
 			String [] temp = line.split(" ");
-			weights.add(temp[1]);	
+			if(temp.length == 1) {
+				weights.add("0");
+			}
+			if (temp.length < 2) {
+				continue;
+			}
+			weights.add(temp[1]);
 		}
 		sc.close();		
 		return weights;
@@ -89,8 +95,13 @@ public class Functions {
 
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
+			System.out.println(line);
 			String [] temp = line.split(" ");
-			rules.add(temp[0] + " " + solution.get(count).toString());	
+			
+			if (temp[0].equals(""))
+				continue;
+			
+			rules.add(temp[0] + " " + solution.get(count).toString());
 			count++;
 		}
 

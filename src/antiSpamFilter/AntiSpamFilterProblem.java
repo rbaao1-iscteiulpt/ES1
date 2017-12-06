@@ -49,31 +49,17 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
 	public void evaluate(DoubleSolution solution){
 
-//		double aux, xi, xj;
+
 		double[] fx = new double[getNumberOfObjectives()];	
 		ArrayList<Double> solution_tmp = new ArrayList<>();
-//		double[] x = new double[getNumberOfVariables()];
+
 		for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-			//			x[i] = solution.getVariableValue(i);
 			solution_tmp.add(solution.getVariableValue(i));
 		}
 
 		fx[0] = Functions.evaluate_solution(0, rules, solution_tmp, ham_result); // FP
 		fx[1] = Functions.evaluate_solution(1, rules, solution_tmp, spam_result); // FN
 
-		//		System.out.println("FP: " + fx[0] + ", FN: " + fx[1]);
-
-		//		fx[0] = 0.0;
-		//		for (int var = 0; var < solution.getNumberOfVariables() - 1; var++) {
-		//			//Invocar a funçã de avaliar e calcular os FP
-		//			fx[0] += Math.abs(x[0]); // Example for testing
-		//		}
-		//
-		//		fx[1] = 0.0;
-		//		for (int var = 0; var < solution.getNumberOfVariables(); var++) {
-		//			//Invocar a função de avaliar e calcular os FN
-		//			fx[1] += Math.abs(x[1]); // Example for testing
-		//		}
 
 		solution.setObjective(0, fx[0]);
 		solution.setObjective(1, fx[1]);
