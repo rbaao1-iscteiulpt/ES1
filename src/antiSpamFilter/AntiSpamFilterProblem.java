@@ -60,7 +60,6 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		fx[0] = Functions.evaluate_solution(0, rules, solution_tmp, ham_result); // FP
 		fx[1] = Functions.evaluate_solution(1, rules, solution_tmp, spam_result); // FN
 
-
 		solution.setObjective(0, fx[0]);
 		solution.setObjective(1, fx[1]);
 		

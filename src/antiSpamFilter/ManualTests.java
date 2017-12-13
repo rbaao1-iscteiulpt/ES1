@@ -1,14 +1,9 @@
 package antiSpamFilter;
 
 import static org.junit.Assert.*;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
-import static org.hamcrest.CoreMatchers.*;
 import org.junit.Test;
-
-import javafx.event.ActionEvent;
 
 public class ManualTests {
 

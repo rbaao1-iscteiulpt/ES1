@@ -11,6 +11,7 @@ import org.junit.Test;
 public class FunctionsTest {
 
 	String rules_path = "jUnitTests/TestFiles/rules.cf";
+	String rules2_path = "jUnitTests/TestFiles/rules2.cf";
 	String spam_path = "jUnitTests/TestFiles/spam.log";
 	String NSGAII_1 = "jUnitTests/TestFiles/NSGAII.rf";
 	String NSGAII_2 = "jUnitTests/TestFiles/NSGAII.rs";
@@ -36,10 +37,10 @@ public class FunctionsTest {
 	public final void testGet_weights() throws FileNotFoundException {
 		ArrayList<String> expectedList = new ArrayList<String>();
 		expectedList.add("1.0");
-		expectedList.add("2.0");
+		expectedList.add("0.0");
 		expectedList.add("3.0");
 		expectedList.add("4.0");
-		ArrayList<String> actualList = Functions.get_weights(rules_path);
+		ArrayList<String> actualList = Functions.get_weights(rules2_path);
 		assertEquals("failure - lists are not equal", expectedList, actualList);
 	}
 
