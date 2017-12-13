@@ -73,24 +73,23 @@ public class Interface {
 	public Interface() {
 		initialize();
 	}
-	
+
 	/**
 	 * Clears the manual and automatic configuration fields.
 	 */
-	private void clearFields(){
+	private void clearFields() {
 		mRulesTextArea.setText("");
 		mWeightTextArea.setText("");
 		aRulesTextArea.setText("");
 		aWeightTextArea.setText("");
 	}
-	
+
 	/**
-	 * Changes the rules.cf file path.
-	 * Checks if Rules Path is valid before writing all
-	 * rules and weights in textAreas, if not returns an error message and
-	 * clears the path and textAreas.
+	 * Changes the rules.cf file path. Checks if Rules Path is valid before
+	 * writing all rules and weights in textAreas, if not returns an error
+	 * message and clears the path and textAreas.
 	 */
-	protected void changeRules(){
+	protected void changeRules() {
 		JFileChooser jc = new JFileChooser();
 		int returnVal = jc.showOpenDialog(frame);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -150,13 +149,13 @@ public class Interface {
 			hamPath.setText("");
 			hamPathOk = false;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Changes the spam.log file.
 	 */
-	protected void changeSpam(){
+	protected void changeSpam() {
 		JFileChooser jc = new JFileChooser();
 		int returnVal = jc.showOpenDialog(frame);
 
@@ -168,7 +167,7 @@ public class Interface {
 			spamPathOk = false;
 		}
 	}
-	
+
 	/**
 	 * Check if both spam and ham path's are chosen. if not, returns an error
 	 * message.
@@ -233,61 +232,55 @@ public class Interface {
 			return weightsD;
 		}
 	}
-	
-	//TODO
-	private void automaticEvaluation() { 
+
+	// TODO
+	private void automaticEvaluation() {
 		String experimentBaseDirectory = "experimentBaseDirectory";
 
 		try {
 			List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-			problemList.add(new ExperimentProblem<>(new AntiSpamFilterProblem(Functions.number_of_rules(rulesPath.getText()), rulesPath.getText(), hamPath.getText(), spamPath.getText())));
+			problemList.add(
+					new ExperimentProblem<>(new AntiSpamFilterProblem(Functions.number_of_rules(rulesPath.getText()),
+							rulesPath.getText(), hamPath.getText(), spamPath.getText())));
 
-			List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
-					configureAlgorithmList(problemList);
+			List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = configureAlgorithmList(
+					problemList);
 
-			Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-					new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("AntiSpamStudy")
-					.setAlgorithmList(algorithmList)
-					.setProblemList(problemList)
-					.setExperimentBaseDirectory(experimentBaseDirectory)
-					.setOutputParetoFrontFileName("FUN")
-					.setOutputParetoSetFileName("VAR")
-					.setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
-					.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
-					.setIndependentRuns(INDEPENDENT_RUNS)
-					.setNumberOfCores(8)
-					.build();
+			Experiment<DoubleSolution, List<DoubleSolution>> experiment = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>(
+					"AntiSpamStudy").setAlgorithmList(algorithmList).setProblemList(problemList)
+							.setExperimentBaseDirectory(experimentBaseDirectory).setOutputParetoFrontFileName("FUN")
+							.setOutputParetoSetFileName("VAR")
+							.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts")
+							.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
+							.setIndependentRuns(INDEPENDENT_RUNS).setNumberOfCores(8).build();
 
 			new ExecuteAlgorithms<>(experiment).run();
 			new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-			new ComputeQualityIndicators<>(experiment).run() ;
-			new GenerateLatexTablesWithStatistics(experiment).run() ;
-			new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
+			new ComputeQualityIndicators<>(experiment).run();
+			new GenerateLatexTablesWithStatistics(experiment).run();
+			new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
 			List<ExperimentProblem<DoubleSolution>> problemList) {
 		List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
 		for (int i = 0; i < problemList.size(); i++) {
-			Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
-					problemList.get(i).getProblem(),
+			Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(),
 					new SBXCrossover(1.0, 5),
 					new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-					.setMaxEvaluations(2000)
-					.setPopulationSize(100)
-					.build();
+							.setMaxEvaluations(2000).setPopulationSize(100).build();
 			algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));
 		}
 
 		return algorithms;
 	}
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -614,7 +607,7 @@ public class Interface {
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 
 		/**
-		 * Test Button 
+		 * Test Button
 		 */
 		testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
@@ -827,29 +820,30 @@ public class Interface {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkPaths()) {
-					try {
-						automaticEvaluation();
-						int solution = Functions.choose_solution("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
-						ArrayList<Double> weights = Functions.get_solution(solution, "experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
-						aWeightTextArea.setText("");
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								try {
-									for (Double w : weights) {
-										aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
-									}
-									String[] temp = Functions.getFalseValues(solution, "experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
-									aFalsePositiveField.setText(temp[0]);
-									aFalseNegativeField.setText(temp[1]);
-								} catch (FileNotFoundException e) {
-									e.printStackTrace();
+					aWeightTextArea.setText(
+							"Generating weights...\nYou might want to get a coffee or something....\nOr go to the bathroom, i don't know");
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								automaticEvaluation();
+								int solution = Functions.choose_solution(
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+								ArrayList<Double> weights = Functions.get_solution(solution,
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+								aWeightTextArea.setText("");
+								for (Double w : weights) {
+									aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
 								}
+								String[] temp = Functions.getFalseValues(solution,
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
+								aFalsePositiveField.setText(temp[0]);
+								aFalseNegativeField.setText(temp[1]);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						});
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						}
+					});
 				}
 			}
 		});
@@ -948,11 +942,11 @@ public class Interface {
 	public boolean isHamPathOk() {
 		return hamPathOk;
 	}
-	
+
 	public JButton getTestButton() {
 		return testButton;
 	}
-	
+
 	public JButton getMSaveButton() {
 		return mSaveButton;
 	}
