@@ -28,7 +28,11 @@ public class AntiSpamFilterAutomaticConfiguration {
 		String experimentBaseDirectory = "experimentBaseDirectory";
 
 		List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-		problemList.add(new ExperimentProblem<>(new AntiSpamFilterProblem()));
+		problemList.add(new ExperimentProblem<>(new AntiSpamFilterProblem(
+				Functions.number_of_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf"),
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf",
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.cf",
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.cf")));
 
 		List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
 				configureAlgorithmList(problemList);

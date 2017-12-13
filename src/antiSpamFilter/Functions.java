@@ -233,4 +233,31 @@ public class Functions {
 		sc.close();		
 		return solution;
 	}
+	
+	/**
+	 * Returns FP and FN in a String[];
+	 * 
+	 * @param n_line of the solution of the document
+	 * @param path to AntiSpamFilterProblem.NSGAII.rf
+	 * @return FP and FN in a String[]
+	 * @throws FileNotFoundException
+	 */
+	public static String[] getFalseValues(int n_line, String path) throws FileNotFoundException {
+		Scanner sc = new Scanner(new File(path));
+		String line;
+		int count = 0;
+
+		while (sc.hasNextLine() && !(count > n_line)) {
+			line = sc.nextLine();
+			String [] temp = line.split(" ");
+			if(count == n_line){
+				sc.close();
+				return temp;
+			}
+			count++;
+		}
+		sc.close();
+		String[] temp = {"0", "0"};
+		return temp;
+	}
 }
