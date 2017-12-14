@@ -198,12 +198,19 @@ public class Functions {
 		}
 		sc.close();
 
+		//subtract both elements of each int array
+		//sort by result, then pick the 2 lowest ones the addition compare described in SolutionAdditionComparator
+		Collections.sort(solution, new SolutionSubtractionComparator());
+		
+		ArrayList<int[]> solution_truncated = new ArrayList<int[]>();
+		solution_truncated.add(solution.get(0));
+		solution_truncated.add(solution.get(1));
+		
 		@SuppressWarnings("unchecked")
-		ArrayList<int[]> solution2 = (ArrayList<int[]>) solution.clone();
+		ArrayList<int[]> solution2 = (ArrayList<int[]>) solution_truncated.clone();
 
-		Collections.sort(solution, new SolutionComparator());
-
-		return solution2.indexOf(solution.get(0));
+		Collections.sort(solution_truncated, new SolutionAdditionComparator());
+		return solution2.indexOf(solution_truncated.get(0));
 	}
 
 	/**

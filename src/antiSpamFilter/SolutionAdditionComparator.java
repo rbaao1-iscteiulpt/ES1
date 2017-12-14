@@ -2,7 +2,7 @@ package antiSpamFilter;
 
 import java.util.Comparator;
 
-public class SolutionComparator implements Comparator<int[]> {
+public class SolutionAdditionComparator implements Comparator<int[]> {
 
 	@Override
 	public int compare(int[] arg0, int[] arg1) {		

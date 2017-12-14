@@ -821,13 +821,13 @@ public class Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkPaths()) {
 					aWeightTextArea.setText(
-							"Generating weights...\nYou might want to get a coffee or something....\nOr go to the bathroom, i don't know");
+							"Generating weights...");
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							try {
 								automaticEvaluation();
 								int solution = Functions.choose_solution(
-										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
 								ArrayList<Double> weights = Functions.get_solution(solution,
 										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
 								aWeightTextArea.setText("");
@@ -839,7 +839,6 @@ public class Interface {
 								aFalsePositiveField.setText(temp[0]);
 								aFalseNegativeField.setText(temp[1]);
 							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
