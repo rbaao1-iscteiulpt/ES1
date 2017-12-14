@@ -233,7 +233,6 @@ public class Interface {
 		}
 	}
 
-	// TODO
 	private void automaticEvaluation() {
 		String experimentBaseDirectory = "experimentBaseDirectory";
 
@@ -812,7 +811,7 @@ public class Interface {
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 
 		/**
-		 * [Auto] Generate Button, [Not implemented]! TODO
+		 * [Auto] Generate Button
 		 */
 		JButton generateButton = new JButton("Generate");
 		autoButtonsPanel.add(generateButton);

@@ -198,8 +198,6 @@ public class Functions {
 		}
 		sc.close();
 
-		//subtract both elements of each int array
-		//sort by result, then pick the 2 lowest ones the addition compare described in SolutionAdditionComparator
 		Collections.sort(solution, new SolutionSubtractionComparator());
 		
 		ArrayList<int[]> solution_truncated = new ArrayList<int[]>();
