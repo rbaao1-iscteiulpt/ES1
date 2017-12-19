@@ -2,7 +2,7 @@ A reuniao teve uma duracao de 1 hora uma vez que o sprint teve uma duracao de 2 
 O sprint decorreu sem incidentes, sendo que todas as tarefas propostas foram concluidas.
 
 Durante o sprint foi concluido:
--Desenho do GUI: Textboxes para os caminhos dos ficheiros rules.cf, spam.log, ham.log; JList para conter os pesos e regras; botão para accionar o cálculo dos falsos positivos e falsos negativos, botão para geração automática de pesos, 
+-Desenho do GUI: Textboxes para os caminhos dos ficheiros rules.cf, spam.log, ham.log; JList para conter os pesos e regras; botao para accionar o calculo dos falsos positivos e falsos negativos, botao para geracao automatica de pesos, 
 -Desenho de software: Definicao dos packages, classes, metodos para organizar as funcionalidades do software.
 -Configuracao da aplicacaoo (caminhos para rules.cf, ham.log, spam.log).
 -Implementacaoo do GUI para configuracao manual
