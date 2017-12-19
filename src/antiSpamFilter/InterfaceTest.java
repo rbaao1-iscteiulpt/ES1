@@ -185,6 +185,10 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Tests if Ham path is blank after canceling the change,
+	 * "cancel" must be pressed.
+	 */
 	@Test
 	public void testCancelChangeHam(){
 		try {
@@ -202,6 +206,10 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Tests if spam path is changed after clicking "change" button
+	 * Spam file must be choosed.
+	 */
 	@Test
 	public void testChangeSpam(){
 		try {
@@ -219,6 +227,10 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Tests if Spam path is blank after canceling the change,
+	 * "cancel" must be pressed.
+	 */
 	@Test
 	public void testCancelChangeSpam(){
 		try {
@@ -236,6 +248,10 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Checks if values of FP and FN are changed after clicking "generate" button
+	 * The files are choosed by orde: rules, spam, ham.
+	 */
 	@Test
 	public void generateButton() {
 		try {
@@ -257,20 +273,10 @@ public class InterfaceTest {
 		}
 	}
 	
-	@Test
-	public final void testAdditionCompare() {
-		int [] a1 = {5, 7};
-		int [] a2 = {3, 2};
-
-
-		SolutionAdditionComparator sc = new SolutionAdditionComparator();
-
-		int result = sc.compare(a1, a2);
-
-		assertEquals("failure - should be equal", result, 7);
-
-	}
-	
+	/**
+	 * Tests if Auto Save Button saves information on automatic interface
+	 * Rules path must be choosen.
+	 */
 	@Test
 	public void testAutoSaveButton() {
 		try {

@@ -219,6 +219,9 @@ public class Interface {
 		}
 	}
 
+	/**
+	 * Evaluates solutions, called after pressing "generate" button
+	 */
 	private void automaticEvaluation() {
 		try {
 		String[] args = {rulesPath.getText(), hamPath.getText(), spamPath.getText()};
@@ -830,7 +833,6 @@ public class Interface {
 	/**
 	 * Launch the application.
 	 */
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -844,86 +846,170 @@ public class Interface {
 		});
 	}
 
+	/**
+	 * Getter to frame
+	 * @return frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * Getter to Rules Text Field
+	 * @return rulesPath
+	 */
 	public JTextField getRulesPath() {
 		return rulesPath;
 	}
 
+	/**
+	 * Getter to Ham Text Field
+	 * @return hamPath
+	 */
 	public JTextField getHamPath() {
 		return hamPath;
 	}
 
+	/**
+	 * Getter to Spam Text Field
+	 * @return spamPath
+	 */
 	public JTextField getSpamPath() {
 		return spamPath;
 	}
 
+	/**
+	 * Getter to manual FP text field
+	 * @return nFalsePosField
+	 */
 	public JTextField getmFalsePosField() {
 		return mFalsePosField;
 	}
 
+	/**
+	 * Getter to manual FN text field
+	 * @return mFalseNegField
+	 */
 	public JTextField getmFalseNegField() {
 		return mFalseNegField;
 	}
 
+	/**
+	 * Getter to auto FP text field
+	 * @return aFasePositiveField
+	 */
 	public JTextField getaFalsePosField() {
 		return aFalsePositiveField;
 	}
 
+	/**
+	 * Getter to auto FN text field
+	 * @return aFalseNegativeField
+	 */
 	public JTextField getaFalseNegField() {
 		return aFalseNegativeField;
 	}
 
+	/**
+	 * Getter to manual Rules text area
+	 * @return mRulesTextArea
+	 */
 	public JTextArea getmRulesTextArea() {
 		return mRulesTextArea;
 	}
 
+	/**
+	 * Getter to manual Weight text area
+	 * @return mWeightTextArea
+	 */
 	public JTextArea getmWeightTextArea() {
 		return mWeightTextArea;
 	}
 
+	/**
+	 * Getter to auto Rules text area
+	 * @return aRulesTextArea
+	 */
 	public JTextArea getaRulesTextArea() {
 		return aRulesTextArea;
 	}
 
+	/**
+	 * Getter to auto Weight text area
+	 * @return aWeightTextArea
+	 */
 	public JTextArea getaWeightTextArea() {
 		return aWeightTextArea;
 	}
 
+	/**
+	 * checks if there is a spamPath
+	 * @return spamPathOk
+	 */
 	public boolean isSpamPathOk() {
 		return spamPathOk;
 	}
 
+	/**
+	 * checks if there is a hamPath
+	 * @return hamPathOk
+	 */
 	public boolean isHamPathOk() {
 		return hamPathOk;
 	}
 
+	/**
+	 * Getter to change Rules Button
+	 * @return rulesButton
+	 */
 	public JButton getRulesButton() {
 		return rulesButton;
 	}
 
+	/**
+	 * Getter to change Ham Button
+	 * @return hamButton
+	 */
 	public JButton getHamButton() {
 		return hamButton;
 	}
 
+	/**
+	 * Getter to change Spam Button
+	 * @return spamButton
+	 */
 	public JButton getSpamButton() {
 		return spamButton;
 	}
 
+	/**
+	 * Getter to test Button
+	 * @return testButton
+	 */
 	public JButton getTestButton() {
 		return testButton;
 	}
 
+	/**
+	 * Getter to manual save Button
+	 * @return mSaveButton
+	 */
 	public JButton getMSaveButton() {
 		return mSaveButton;
 	}
 
+	/**
+	 * Getter to Generate Button
+	 * @return generateButton
+	 */
 	public JButton getGenerateButton() {
 		return generateButton;
 	}
 
+	/**
+	 * Getter to auto save Button
+	 * @return aSaveButton
+	 */
 	public JButton getASaveButton() {
 		return aSaveButton;
 	}
