@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
@@ -64,8 +65,13 @@ public class Interface {
 	private JTextArea aWeightTextArea;
 	private boolean spamPathOk;
 	private boolean hamPathOk;
+	private JButton rulesButton;
+	private JButton hamButton;
+	private JButton spamButton;
 	private JButton testButton;
 	private JButton mSaveButton;
+	private JButton generateButton;
+	private JButton aSaveButton;
 
 	/**
 	 * Create the application.
@@ -345,7 +351,7 @@ public class Interface {
 		/**
 		 * Rules Change Button.
 		 */
-		JButton rulesButton = new JButton("Change");
+		rulesButton = new JButton("Change");
 		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
 		gbc_rulesButton.fill = GridBagConstraints.BOTH;
 		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
@@ -387,7 +393,7 @@ public class Interface {
 		/**
 		 * Ham change path Button.
 		 */
-		JButton hamButton = new JButton("Change");
+		hamButton = new JButton("Change");
 		GridBagConstraints gbc_hamButton = new GridBagConstraints();
 		gbc_hamButton.fill = GridBagConstraints.BOTH;
 		gbc_hamButton.insets = new Insets(0, 0, 5, 0);
@@ -429,7 +435,7 @@ public class Interface {
 		/**
 		 * Spam change path Button.
 		 */
-		JButton spamButton = new JButton("Change");
+		spamButton = new JButton("Change");
 		spamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -791,11 +797,17 @@ public class Interface {
 		 * areas must be the same Height to scrolls to work
 		 */
 		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
 		aRuleScrollPane.getVerticalScrollBar().setModel(aWeightScrollPane.getVerticalScrollBar().getModel());
+		aRuleScrollPane.setWheelScrollingEnabled(false);
+		aRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				aWeightScrollPane.dispatchEvent(e);
+			}
+		});
 		autoRulesPanel.add(aRuleScrollPane);
 		autoRulesPanel.add(aWeightScrollPane);
 
@@ -813,12 +825,13 @@ public class Interface {
 		/**
 		 * [Auto] Generate Button
 		 */
-		JButton generateButton = new JButton("Generate");
+		generateButton = new JButton("Generate");
 		autoButtonsPanel.add(generateButton);
 		generateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkPaths()) {
+					generateButton.setEnabled(false);
 					aWeightTextArea.setText(
 							"Generating weights...");
 					SwingUtilities.invokeLater(new Runnable() {
@@ -840,16 +853,18 @@ public class Interface {
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
 							}
+							generateButton.setEnabled(true);	
 						}
 					});
 				}
+				
 			}
 		});
 
 		/**
 		 * [Auto] Save Button
 		 */
-		JButton aSaveButton = new JButton("Save");
+		aSaveButton = new JButton("Save");
 		autoButtonsPanel.add(aSaveButton);
 		aSaveButton.addActionListener(new ActionListener() {
 			@Override
@@ -909,11 +924,11 @@ public class Interface {
 		return mFalseNegField;
 	}
 
-	public JTextField getaFalsePositiveField() {
+	public JTextField getaFalsePosField() {
 		return aFalsePositiveField;
 	}
 
-	public JTextField getaFalseNegativeField() {
+	public JTextField getaFalseNegField() {
 		return aFalseNegativeField;
 	}
 
@@ -941,12 +956,32 @@ public class Interface {
 		return hamPathOk;
 	}
 
+	public JButton getRulesButton() {
+		return rulesButton;
+	}
+
+	public JButton getHamButton() {
+		return hamButton;
+	}
+
+	public JButton getSpamButton() {
+		return spamButton;
+	}
+
 	public JButton getTestButton() {
 		return testButton;
 	}
 
 	public JButton getMSaveButton() {
 		return mSaveButton;
+	}
+
+	public JButton getGenerateButton() {
+		return generateButton;
+	}
+
+	public JButton getASaveButton() {
+		return aSaveButton;
 	}
 
 }
