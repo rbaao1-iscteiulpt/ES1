@@ -8,8 +8,20 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+/**
+ * This class houses several tests pertaining to the Graphical User Interface. <p>
+ * Several tests make use of a Thread.sleep() function to give Swing some time to update whatever values
+ * it has to in order for the test to make sense. <p>
+ * Do not instantiate this class if you don't know what you're doing!
+ * @author pvmpa-iscteiulpt & afgos-iscteiulpt
+ *
+ */
 public class InterfaceTest {
 		
+	/**
+	 * Tests if the Test button in the Manual Implementation works properly when no rules.cf/spam.log/ham.log 
+	 * are provided. It shouldn't have any effect on the FP/FN counters.
+	 */
 	@Test
 	public void testTestButton(){
 		try {
@@ -27,6 +39,10 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Tests if the Test button in the Manual Implementation works properly when rules.cf/spam.log/ham.log 
+	 * are provided. The FP/FN counters must change.
+	 */
 	@Test
 	public void testTestButton2(){
 		try {
@@ -48,6 +64,10 @@ public class InterfaceTest {
 		}
 	}
 	
+	/**
+	 * Tests the rules/weights saving function by comparing the saved files with the information in the
+	 * interface's text areas. They should hold the same information.
+	 */
 	@Test
 	public void testManualSaveButton() {
 		try {
@@ -82,6 +102,10 @@ public class InterfaceTest {
 		}
 	}
 	
+	/**
+	 * Tests whether changing the path to a correct Rules file does anything or not.
+	 * The path to rules.cf should change.
+	 */
 	@Test
 	public void testChangeRules(){
 		try {
@@ -99,23 +123,31 @@ public class InterfaceTest {
 		
 	}
 	
+	/**
+	 * Tests whether NOT changing the path to the Rules file while it's empty does anything or not.
+	 * The path to rules.cf should not change and/or end the program in a catastrophic manner.
+	 */
 	@Test
 	public void testCancelChangeRules(){
 		try {
 			System.out.println("===TEST CANCEL RULES.CF IMPORT===");
 			Interface testSubject = new Interface();
-			System.out.println("chooose cancel");
+			System.out.println("choose cancel");
 			testSubject.changeRules();
 			
 			Thread.sleep(1000);
 			
-			assertThat(testSubject.getRulesPath().getText(), is(not("")));
+			assertThat(testSubject.getRulesPath().getText(), is(""));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	/**
+	 * Tests whether the program can handle the user choosing the wrong rules.cf file.
+	 * The program should toss an error prompt at the user and not change the path to the file. 
+	 */
 	@Test
 	public void testChangeRules_Failure(){
 		try {
@@ -132,6 +164,10 @@ public class InterfaceTest {
 		}
 	}
 	
+	/**
+	 * Tests whether changing the path to ham.log does anything. The user should provide a correct path.
+	 * The path to Ham should change.
+	 */
 	@Test
 	public void testChangeHam(){
 		try {
