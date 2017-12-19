@@ -1,0 +1,17 @@
+A reunião teve uma duração de 1 hora uma vez que o sprint teve uma duração de 2 semanas. Toda a equipa participou na reunião.
+O sprint decorreu sem incidentes, sendo que todas as tarefas propostas foram concluídas.
+
+Durante o sprint foi concluído:
+-Desenho do GUI
+-Configuração da aplicação (caminhos para rules.cf, ham.log, spam.log)
+-Implementação do GUI para configuração manual
+-Implementação de funções gerais a ser usadas tanto na parte manual como na automática
+-Testes JUnit relativos à implementação de funções gerais a ser usadas tanto na parte manual como na automática
+-Correção de erros relativos ao carregamento e escrita de regras
+-Testes JUnit relativos à à implementação do GUI para configuração da aplicação (caminhos para rules.cf, ham.log, spam.log)
+-Testes JUnit relativos à implementação do GUI para configuração manual
+
+A equipa encontra-se satisfeita com a organização implementada e com a dinâmica de equipa desenvolvida no primeiro sprint.
+Os developers, Paulo e André, gostariam de continuar a desenvolver a interface e os testes unitários relativos à mesma.
+O Scrum Master, Rodrigo, continuará a verificar que o projecto segue os métodos do planeamento ágil e as técnicas de scrum e continuar a realizar os testes unitários relativos às funções usadas tanto na configuração manual como na configuração automática e a realizar a documentação e relatórios necessários ao projecto.
+A Quality Manager, Susana, terminou o desenvolvimento de funções a utilizar na configuração manual e continuará a realizar a gestão de qualidade e a participar nos testes unitários.
