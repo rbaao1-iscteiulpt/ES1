@@ -9,6 +9,11 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5425378248416912288L;
+	
 	private int nRules = 0;
 	private String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
 	private String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
@@ -67,5 +72,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		solution.setObjective(0, fx[0]);
 		solution.setObjective(1, fx[1]);
 		
+	}
+
+	public int getnRules() {
+		return nRules;
 	}
 }
