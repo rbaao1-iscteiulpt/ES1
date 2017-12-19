@@ -144,9 +144,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST TEST BUTTON FROM MANUAL IMPLEMENTATION===");
 			Interface testSubject = new Interface();
-//			testSubject.changeRules();
-//			testSubject.changeSpam();
-//			testSubject.changeHam();
+
 			testSubject.getTestButton().getActionListeners()[0].actionPerformed(null);
 			
 			Thread.sleep(1000);
@@ -163,8 +161,11 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST 2 TEST BUTTON FROM MANUAL IMPLEMENTATION===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose rules");
 			testSubject.changeRules();
+			System.out.println("chooose spam");
 			testSubject.changeSpam();
+			System.out.println("chooose ham");
 			testSubject.changeHam();
 			testSubject.getTestButton().getActionListeners()[0].actionPerformed(null);
 			
@@ -182,6 +183,7 @@ public class JUnitTests {
 			System.out.println("===TEST SAVE BUTTON FROM MANUAL IMPLEMENTATION===");
 			Interface testSubject = new Interface();
 			testSubject.getFrame().setVisible(true);
+			System.out.println("chooose rules");
 			testSubject.changeRules();
 			
 			Thread.sleep(5000);
@@ -214,6 +216,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST SUCCESSFUL RULES.CF IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose rules");
 			testSubject.getRulesButton().getActionListeners()[0].actionPerformed(null);
 			
 			Thread.sleep(1000);
@@ -230,6 +233,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST CANCEL RULES.CF IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose cancel");
 			testSubject.changeRules();
 			
 			Thread.sleep(1000);
@@ -246,6 +250,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST UNSUCCESSFUL RULES.CF IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose any except rules");
 			testSubject.changeRules();
 			
 			Thread.sleep(1000);
@@ -261,6 +266,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST SUCCESSFUL HAM.LOG IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose ham");
 			testSubject.getHamButton().getActionListeners()[0].actionPerformed(null);
 			
 			Thread.sleep(1000);
@@ -277,6 +283,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST Cancel SUCCESSFUL HAM.LOG IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose cancel");
 			testSubject.changeHam();
 			
 			Thread.sleep(1000);
@@ -293,6 +300,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST SUCCESSFUL SPAM.LOG IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose spam");
 			testSubject.getSpamButton().getActionListeners()[0].actionPerformed(null);
 			
 			Thread.sleep(1000);
@@ -309,6 +317,7 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST Cancel SUCCESSFUL SPAM.LOG IMPORT===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose cancel");
 			testSubject.changeSpam();
 			
 			Thread.sleep(1000);
@@ -325,8 +334,11 @@ public class JUnitTests {
 		try {
 			System.out.println("===TEST Generate BUTTON FROM AUTO IMPLEMENTATION===");
 			Interface testSubject = new Interface();
+			System.out.println("chooose rules");
 			testSubject.changeRules();
+			System.out.println("chooose spam");
 			testSubject.changeSpam();
+			System.out.println("chooose ham");
 			testSubject.changeHam();
 			testSubject.getGenerateButton().getActionListeners()[0].actionPerformed(null);
 			
@@ -387,6 +399,7 @@ public class JUnitTests {
 			System.out.println("===TEST SAVE BUTTON FROM AUTO IMPLEMENTATION===");
 			Interface testSubject = new Interface();
 			testSubject.getFrame().setVisible(true);
+			System.out.println("chooose rules");
 			testSubject.changeRules();
 			
 			Thread.sleep(5000);
