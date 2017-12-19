@@ -874,8 +874,9 @@ public class Interface {
 					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
 					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
 							aRulesTextArea.getText().split("\n").length);
-					if (weightsD != null)
-						Functions.write_weights(rulesPath.getText(), weightsD);
+					if (weightsD != null){
+						Functions.write_weights("./AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", weightsD);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
