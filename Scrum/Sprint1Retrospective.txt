@@ -13,7 +13,12 @@ Durante o sprint foi concluido:
 -Testes JUnit relativos a implementacao do GUI para configuracao manual
 -Quality Assurance relativa a: Testes JUnit relativos a implementacao de funcoes gerais a ser usadas tanto na parte manual como na automatica; testes JUnit relativos a implementacao do GUI para configuracao da aplicacao (caminhos para rules.cf, ham.log, spam.log); testes JUnit relativos a implementacao do GUI para configuracao manual
 
-A equipa encontra-se satisfeita com a organizacao implementada e com a dinamica de equipa desenvolvida no primeiro sprint.
+A equipa encontra-se satisfeita com a organizacao implementada e com a dinamica de equipa desenvolvida no primeiro sprint. A equipa efectuou reuniões regulares.
 Os developers, Paulo e Andre, gostariam de continuar a desenvolver a interface e os testes unitarios relativos a mesma.
 O Scrum Master, Rodrigo, continuara a verificar que o projecto segue os metodos do planeamento agil e as tecnicas de scrum e continuar a realizar os testes unitarios relativos as funcoes usadas tanto na configuraçao manual como na configuracao automatica e a realizar a documentacao e relatorios necessarios ao projecto.
 A Quality Manager, Susana, terminou o desenvolvimento de funcoes a utilizar na configuracao manual e continuara a realizar a gestao de qualidade e a participar nos testes unitarios.
+
+Em termos de aspectos a melhorar:
+-Actualizar as horas atribuidas às tarefas mais frequentemente.
+-Melhor utilização do Trello uma vez que a equipa ainda não se encontra 100% confortável com a utilização do mesmo.
+-Efectuar merge mais frequentemente.
