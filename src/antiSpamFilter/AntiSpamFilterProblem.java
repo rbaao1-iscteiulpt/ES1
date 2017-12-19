@@ -9,16 +9,25 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 
-	static int nRules = 337;
-	private static String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
-	private static String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
-	private static String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5425378248416912288L;
+	
+	private int nRules = 0;
+	private String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
+	private String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
+	private String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
 	private ArrayList<String> rules;
 	private ArrayList<ArrayList<String>> ham_result;
 	private ArrayList<ArrayList<String>> spam_result;
 
-	public AntiSpamFilterProblem() {
+	public AntiSpamFilterProblem(int nRules, String rulesPath, String hamPath, String spamPath) {
 		this(nRules);
+		this.nRules=nRules;
+		this.rules_path=rulesPath;
+		this.ham_path=hamPath;
+		this.spam_path=spamPath;
 	}
 
 	public AntiSpamFilterProblem(Integer numberOfVariables) {
@@ -63,5 +72,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		solution.setObjective(0, fx[0]);
 		solution.setObjective(1, fx[1]);
 		
+	}
+
+	public int getnRules() {
+		return nRules;
 	}
 }

@@ -4,12 +4,8 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;
@@ -28,7 +24,11 @@ public class AntiSpamFilterAutomaticConfiguration {
 		String experimentBaseDirectory = "experimentBaseDirectory";
 
 		List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-		problemList.add(new ExperimentProblem<>(new AntiSpamFilterProblem()));
+		problemList.add(new ExperimentProblem<>(new AntiSpamFilterProblem(
+				Functions.number_of_rules("AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf"),
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf",
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.cf",
+				"AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.cf")));
 
 		List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
 				configureAlgorithmList(problemList);

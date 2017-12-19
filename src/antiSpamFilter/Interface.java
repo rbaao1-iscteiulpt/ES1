@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -24,6 +25,23 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentBuilder;
+import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+
 import javax.swing.JTextArea;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -31,6 +49,7 @@ import java.awt.Insets;
 
 public class Interface {
 
+	private static int INDEPENDENT_RUNS = 5;
 	private JFrame frame;
 	private JTextField rulesPath;
 	private JTextField hamPath;
@@ -45,8 +64,13 @@ public class Interface {
 	private JTextArea aWeightTextArea;
 	private boolean spamPathOk;
 	private boolean hamPathOk;
+	private JButton rulesButton;
+	private JButton hamButton;
+	private JButton spamButton;
 	private JButton testButton;
 	private JButton mSaveButton;
+	private JButton generateButton;
+	private JButton aSaveButton;
 
 	/**
 	 * Create the application.
@@ -54,7 +78,7 @@ public class Interface {
 	public Interface() {
 		initialize();
 	}
-	
+
 	/**
 	 * Clears the manual and automatic configuration fields.
 	 */
@@ -64,12 +88,11 @@ public class Interface {
 		aRulesTextArea.setText("");
 		aWeightTextArea.setText("");
 	}
-	
+
 	/**
-	 * Changes the rules.cf file path.
-	 * Checks if Rules Path is valid before writing all
-	 * rules and weights in textAreas, if not returns an error message and
-	 * clears the path and textAreas.
+	 * Changes the rules.cf file path. Checks if Rules Path is valid before
+	 * writing all rules and weights in textAreas, if not returns an error
+	 * message and clears the path and textAreas.
 	 */
 	protected void changeRules(){
 		JFileChooser jc = new JFileChooser();
@@ -131,9 +154,9 @@ public class Interface {
 			hamPath.setText("");
 			hamPathOk = false;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Changes the spam.log file.
 	 */
@@ -149,7 +172,7 @@ public class Interface {
 			spamPathOk = false;
 		}
 	}
-	
+
 	/**
 	 * Check if both spam and ham path's are chosen. if not, returns an error
 	 * message.
@@ -214,7 +237,54 @@ public class Interface {
 			return weightsD;
 		}
 	}
-	
+
+	private void automaticEvaluation() {
+		String experimentBaseDirectory = "experimentBaseDirectory";
+
+		try {
+			List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+			problemList.add(
+					new ExperimentProblem<>(new AntiSpamFilterProblem(Functions.number_of_rules(rulesPath.getText()),
+							rulesPath.getText(), hamPath.getText(), spamPath.getText())));
+
+			List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = configureAlgorithmList(
+					problemList);
+
+			Experiment<DoubleSolution, List<DoubleSolution>> experiment = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>(
+					"AntiSpamStudy").setAlgorithmList(algorithmList).setProblemList(problemList)
+							.setExperimentBaseDirectory(experimentBaseDirectory).setOutputParetoFrontFileName("FUN")
+							.setOutputParetoSetFileName("VAR")
+							.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts")
+							.setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
+							.setIndependentRuns(INDEPENDENT_RUNS).setNumberOfCores(8).build();
+
+			new ExecuteAlgorithms<>(experiment).run();
+			new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+			new ComputeQualityIndicators<>(experiment).run();
+			new GenerateLatexTablesWithStatistics(experiment).run();
+			new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+			List<ExperimentProblem<DoubleSolution>> problemList) {
+		List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
+
+		for (int i = 0; i < problemList.size(); i++) {
+			Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(),
+					new SBXCrossover(1.0, 5),
+					new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+							.setMaxEvaluations(2000).setPopulationSize(100).build();
+			algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));
+		}
+
+		return algorithms;
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -280,7 +350,7 @@ public class Interface {
 		/**
 		 * Rules Change Button.
 		 */
-		JButton rulesButton = new JButton("Change");
+		rulesButton = new JButton("Change");
 		GridBagConstraints gbc_rulesButton = new GridBagConstraints();
 		gbc_rulesButton.fill = GridBagConstraints.BOTH;
 		gbc_rulesButton.insets = new Insets(0, 0, 5, 0);
@@ -322,7 +392,7 @@ public class Interface {
 		/**
 		 * Ham change path Button.
 		 */
-		JButton hamButton = new JButton("Change");
+		hamButton = new JButton("Change");
 		GridBagConstraints gbc_hamButton = new GridBagConstraints();
 		gbc_hamButton.fill = GridBagConstraints.BOTH;
 		gbc_hamButton.insets = new Insets(0, 0, 5, 0);
@@ -364,7 +434,7 @@ public class Interface {
 		/**
 		 * Spam change path Button.
 		 */
-		JButton spamButton = new JButton("Change");
+		spamButton = new JButton("Change");
 		spamButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -541,7 +611,7 @@ public class Interface {
 		manButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 
 		/**
-		 * Test Button TODO Tests
+		 * Test Button
 		 */
 		testButton = new JButton("Test");
 		manButtonsPanel.add(testButton);
@@ -570,7 +640,7 @@ public class Interface {
 		});
 
 		/**
-		 * [Manual] Save Button TODO Tests
+		 * [Manual] Save Button
 		 */
 		mSaveButton = new JButton("Save");
 		manButtonsPanel.add(mSaveButton);
@@ -726,11 +796,17 @@ public class Interface {
 		 * areas must be the same Height to scrolls to work
 		 */
 		JScrollPane aRuleScrollPane = new JScrollPane(aRulesTextArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollPane aWeightScrollPane = new JScrollPane(aWeightTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		aRuleScrollPane.getHorizontalScrollBar().setModel(aWeightScrollPane.getHorizontalScrollBar().getModel());
 		aRuleScrollPane.getVerticalScrollBar().setModel(aWeightScrollPane.getVerticalScrollBar().getModel());
+		aRuleScrollPane.setWheelScrollingEnabled(false);
+		aRuleScrollPane.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				aWeightScrollPane.dispatchEvent(e);
+			}
+		});
 		autoRulesPanel.add(aRuleScrollPane);
 		autoRulesPanel.add(aWeightScrollPane);
 
@@ -746,23 +822,49 @@ public class Interface {
 		autoButtonsPanel.setLayout(new GridLayout(2, 0, 0, 0));
 
 		/**
-		 * [Auto] Generate Button, [Not implemented]! TODO
+		 * [Auto] Generate Button
 		 */
-		JButton generateButton = new JButton("Generate");
+		generateButton = new JButton("Generate");
 		autoButtonsPanel.add(generateButton);
 		generateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkPaths()) {
-					// Generate weights
+					generateButton.setEnabled(false);
+					aWeightTextArea.setText(
+							"Generating weights...");
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								automaticEvaluation();
+								int solution = Functions.choose_solution(
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
+								ArrayList<Double> weights = Functions.get_solution(solution,
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+								aWeightTextArea.setText("");
+								for (Double w : weights) {
+									aWeightTextArea.setText(aWeightTextArea.getText() + w + "\n");
+								}
+								String[] temp = Functions.getFalseValues(solution,
+										"experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
+								aFalsePositiveField.setText(temp[0]);
+								aFalseNegativeField.setText(temp[1]);
+								
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							}
+							generateButton.setEnabled(true);	
+						}
+					});
 				}
+				
 			}
 		});
 
 		/**
-		 * [Auto] Save Button, [Not implemented]! TODO
+		 * [Auto] Save Button
 		 */
-		JButton aSaveButton = new JButton("Save");
+		aSaveButton = new JButton("Save");
 		autoButtonsPanel.add(aSaveButton);
 		aSaveButton.addActionListener(new ActionListener() {
 			@Override
@@ -772,15 +874,16 @@ public class Interface {
 					ArrayList<String> weights = new ArrayList<String>(Arrays.asList(allWeights));
 					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
 							aRulesTextArea.getText().split("\n").length);
-					if (weightsD != null)
-						Functions.write_weights(rulesPath.getText(), weightsD);
+					if (weightsD != null){
+						Functions.write_weights("./AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", weightsD);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -822,11 +925,11 @@ public class Interface {
 		return mFalseNegField;
 	}
 
-	public JTextField getaFalsePositiveField() {
+	public JTextField getaFalsePosField() {
 		return aFalsePositiveField;
 	}
 
-	public JTextField getaFalseNegativeField() {
+	public JTextField getaFalseNegField() {
 		return aFalseNegativeField;
 	}
 
@@ -853,13 +956,33 @@ public class Interface {
 	public boolean isHamPathOk() {
 		return hamPathOk;
 	}
-	
+
+	public JButton getRulesButton() {
+		return rulesButton;
+	}
+
+	public JButton getHamButton() {
+		return hamButton;
+	}
+
+	public JButton getSpamButton() {
+		return spamButton;
+	}
+
 	public JButton getTestButton() {
 		return testButton;
 	}
-	
+
 	public JButton getMSaveButton() {
 		return mSaveButton;
+	}
+
+	public JButton getGenerateButton() {
+		return generateButton;
+	}
+
+	public JButton getASaveButton() {
+		return aSaveButton;
 	}
 
 }
