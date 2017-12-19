@@ -365,35 +365,6 @@ public class JUnitTests {
 	}
 	
 	@Test
-	public final void testSubtractionCompare(){
-		int[] a1 = {2, 2};
-		int[] a2 = {4, 4};
-		
-		SolutionSubtractionComparator sc = new SolutionSubtractionComparator();
-		
-		int result = sc.compare(a1, a2);
-		System.out.println("Result == 0? Actual: " + result);
-		
-		assertTrue("Something is wrong here! Result == 0 FAILURE", result == 0);
-		
-		a1[0] = 1; a1[1] = 4;
-		a2[0] = 3; a2[1] = 4;
-		
-		result = sc.compare(a1, a2);
-		
-		System.out.println("Result < 0? Actual: " + result);
-		
-		assertTrue("Something is wrong here! Result < 0 FAILURE", result < 0);
-		
-		result = sc.compare(a2, a1);
-		
-		System.out.println("Result > 0? Actual: " + result);
-		
-		assertTrue("Something is wrong here! Result > 0 FAILURE", result > 0);
-		
-	}
-	
-	@Test
 	public void testAutoSaveButton() {
 		try {
 			System.out.println("===TEST SAVE BUTTON FROM AUTO IMPLEMENTATION===");

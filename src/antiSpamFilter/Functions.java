@@ -197,18 +197,13 @@ public class Functions {
 			solution.add(i);
 		}
 		sc.close();
-
-		Collections.sort(solution, new SolutionSubtractionComparator());
-		
-		ArrayList<int[]> solution_truncated = new ArrayList<int[]>();
-		solution_truncated.add(solution.get(0));
-		solution_truncated.add(solution.get(1));
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<int[]> solution2 = (ArrayList<int[]>) solution_truncated.clone();
+		ArrayList<int[]> solution2 = (ArrayList<int[]>) solution.clone();
 
-		Collections.sort(solution_truncated, new SolutionAdditionComparator());
-		return solution2.indexOf(solution_truncated.get(0));
+		Collections.sort(solution, new SolutionAdditionComparator());
+
+		return solution2.indexOf(solution.get(0));
 	}
 
 	/**
