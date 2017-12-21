@@ -55,7 +55,6 @@ public class AntiSpamFilterAutomaticConfiguration {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
