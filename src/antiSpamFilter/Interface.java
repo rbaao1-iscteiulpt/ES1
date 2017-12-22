@@ -682,7 +682,7 @@ public class Interface {
 					if (weightsD != null)
 						Functions.write_weights(rulesPath.getText(), weightsD);
 				} catch (IOException e) {
-					e.printStackTrace();
+					fileNotFound();
 				}
 			}
 		});
