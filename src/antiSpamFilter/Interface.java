@@ -198,7 +198,7 @@ public class Interface {
 		
 		jc = new JFileChooser();
 		
-		JOptionPane.showMessageDialog(frame, "Point the program towards miktex-texworks.exe, please.", "Automatic Generation Script 2/2", 
+		JOptionPane.showMessageDialog(frame, "Point the program towards pdflatex.exe, please.", "Automatic Generation Script 2/2", 
 				JOptionPane.INFORMATION_MESSAGE);
 		returnVal = jc.showOpenDialog(frame);
 		
