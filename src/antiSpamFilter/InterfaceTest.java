@@ -265,7 +265,7 @@ public class InterfaceTest {
 			testSubject.changeHam();
 			testSubject.getGenerateButton().getActionListeners()[0].actionPerformed(null);
 			
-			Thread.sleep(20000);
+			Thread.sleep(30000);
 			assertNotEquals(testSubject.getaFalseNegField().getText(), "0");
 			assertNotEquals(testSubject.getaFalsePosField().getText(), "0");
 		} catch (InterruptedException e) {
