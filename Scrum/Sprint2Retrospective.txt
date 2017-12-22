@@ -1,0 +1,24 @@
+A reuniao teve uma duracao de 1 hora uma vez que o sprint teve uma duracao de 2/3 semanas. Toda a equipa participou na reuniao.
+O sprint decorreu sem incidentes, sendo que todas as tarefas propostas foram concluidas.
+
+Durante o sprint foi concluido:
+-Implementacao do GUI para configuracao automatica
+-Ajuste dos valores default do Anti-Spam Filter Automatic Configuration, nomeadamente na funcao evaluate()
+-Testes JUnit relativos a implementacao do GUI para configuracao automática
+-Testes JUnit relativos a classe AntiSpamFilterAutomaticConfiguration
+-Testes JUnit relativos a classe AntiSpamFilterConfiguration
+-Escrita de JavaDoc para os testes JUnit relativos a implementacao do GUI para configuracao manual
+-Escrita de JavaDoc para os testes JUnit relativos as funcoes utilizadas tanto na configuracao manual como na configuracao automatica
+-Quality Assurance relativa a:Testes JUnit relativos a implementacao do GUI para configuracao automatica; testes JUnit relativos a classe AntiSpamFilterAutomaticConfiguration; testes JUnit relativos a classe AntiSpamFilterConfiguration
+
+A equipa encontra-se satisfeita com a organizacao mantida no segundo sprint e encontra-se motivada para a recta final e concluir o ultimo sprint.
+Os developers, Paulo e Andre, concluiram o desenvolvimento da interface e os testes unitarios relativos a mesma bem como a sua documentacao em javaDoc, e efetuaram os testes a interface para garantir que esta protegia o utilizador de colocar inputs invalidos.
+O Scrum Master, Rodrigo, continuara a verificar que o projecto segue os metodos do planeamento agil e as tecnicas de scrum. Conclui tambem o desenvolvimento de testes os testes unitarios relativos as configuracao automatica.
+A Quality Manager, Susana, terminou o desenvolvimento de funcoes a utilizar na configuracao automatica bem como a participcao nos testes unitarios relativos a mesma. Continuara a realizar a gestao de qualidade.
+Tanto o Rodrigo como a Susana ficarao encarregados de concluir os relatorios necessarios a finalizacao do projecto, nomeadamente o code inspection report, a geracao de diagramas de classes, o relatorio de cobertura de testes com recurso ao eclEmma.
+
+Em termos de processo, 
+Foram realizadas algumas reunioes ao longo do sprint mas nao tantas como desejado uma vez que devido ao trabalho exigido por outras unidades curriculares foi mais dificil conciliar todo o grupo, levando a uma maior distruibuicao de tarefas pelos membros do grupo ao inves de o grupo se juntar e trabalhar num unico dispositivo como ocorreu mais frequentemente no primeiro sprint.
+O trello não foi actualizado tao frequentemente uma vez que o trabalho foi feito em "mini-sprints" onde os elementos do grupo escolhiam uma card a desenvolviam toda de seguida, embora as tarefas deste sprint nao tenham sido tao trabalhosas como as do primeiro sprint.
+Continuou a haver uma boa dinamica de equipa, e os elementos do grupo encontram-se motivados. 
+Relativamente aos aspectos a melhorar, o trello devia ter sido actualizado mais frequentemente.
