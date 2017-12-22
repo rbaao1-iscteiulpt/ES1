@@ -279,10 +279,8 @@ public class Interface {
 				SwingUtilities.invokeLater(new Runnable(){
 					public void run(){
 						try {
-							new ProcessBuilder(latexPaths[0],"HV.Boxplot.R")
-									.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
-							new ProcessBuilder(latexPaths[1],"AntiSpamStudy.tex")
-									.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\latex")).start();
+							ScriptGenerator.generateR(latexPaths[0]);
+							ScriptGenerator.generatorLatex(latexPaths[1]);
 							System.out.println("RScript/Latex generators are done!!");
 						} catch (IOException e) {
 							System.out.println("WARNING: RScript/Latex FAILURE");

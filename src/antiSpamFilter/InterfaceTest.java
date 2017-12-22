@@ -156,7 +156,7 @@ public class InterfaceTest {
 			System.out.println("chooose any except rules");
 			testSubject.changeRules();
 			
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			
 			assertThat(testSubject.getRulesPath().getText(), is(""));
 		} catch (InterruptedException e) {
