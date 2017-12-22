@@ -73,6 +73,15 @@ public class Interface {
 	}
 
 	/**
+	 * Tosses an error message used when the user specifies a non-existant file.
+	 */
+	private void fileNotFound() {
+		JOptionPane.showMessageDialog(frame,
+				"The selected file does not exist",
+				"Invalid File!", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
 	 * Changes the rules.cf file path. Checks if Rules Path is valid before
 	 * writing all rules and weights in textAreas, if not returns an error
 	 * message and clears the path and textAreas.
@@ -891,21 +900,7 @@ public class Interface {
 		});
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interface window = new Interface();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Getter to frame
@@ -1074,11 +1069,21 @@ public class Interface {
 	public JButton getASaveButton() {
 		return aSaveButton;
 	}
-	
-	private void fileNotFound() {
-		JOptionPane.showMessageDialog(frame,
-				"The selected file does not exist",
-				"Invalid File!", JOptionPane.ERROR_MESSAGE);
-	}
 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Interface window = new Interface();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 }
