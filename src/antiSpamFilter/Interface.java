@@ -32,19 +32,31 @@ import java.awt.Insets;
 
 public class Interface {
 	private JFrame frame;
+	
+	//Paths
 	private JTextField rulesPath;
 	private JTextField hamPath;
 	private JTextField spamPath;
+	
+	//False Positive/False Negative fields
 	private JTextField mFalsePosField;
 	private JTextField mFalseNegField;
 	private JTextField aFalsePositiveField;
 	private JTextField aFalseNegativeField;
+	
+	//Rules/Weights text areas
 	private JTextArea mRulesTextArea;
 	private JTextArea mWeightTextArea;
 	private JTextArea aRulesTextArea;
 	private JTextArea aWeightTextArea;
+	
+	//Validate paths
 	private boolean spamPathOk;
 	private boolean hamPathOk;
+	private boolean rScriptPathOK;
+	private boolean miktexPathOK;
+	
+	//Buttons
 	private JButton rulesButton;
 	private JButton hamButton;
 	private JButton spamButton;
@@ -52,8 +64,7 @@ public class Interface {
 	private JButton mSaveButton;
 	private JButton generateButton;
 	private JButton aSaveButton;
-	private boolean rScriptPathOK;
-	private boolean miktexPathOK;
+
 
 	/**
 	 * Create the application.
