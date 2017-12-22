@@ -129,6 +129,8 @@ public class Interface {
 			} catch (FileNotFoundException e) {
 				fileNotFound();
 			}
+		} else {
+			rulesPath.setText("");
 		}
 	}
 
