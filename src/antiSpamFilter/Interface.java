@@ -118,7 +118,7 @@ public class Interface {
 				});
 				mWeightTextArea.setEditable(true);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				fileNotFound();
 			}
 		}
 	}
@@ -137,7 +137,6 @@ public class Interface {
 			hamPath.setText("");
 			hamPathOk = false;
 		}
-
 	}
 
 	/**
@@ -641,7 +640,7 @@ public class Interface {
 									Functions.file_to_array(spamPath.getText()))).toString());
 						}
 					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						fileNotFound();
 					}
 				}
 			}
@@ -859,7 +858,7 @@ public class Interface {
 								aFalseNegativeField.setText(temp[1]);
 								
 							} catch (FileNotFoundException e) {
-								e.printStackTrace();
+								fileNotFound();
 							}
 							generateButton.setEnabled(true);	
 						}
@@ -1074,6 +1073,12 @@ public class Interface {
 	 */
 	public JButton getASaveButton() {
 		return aSaveButton;
+	}
+	
+	private void fileNotFound() {
+		JOptionPane.showMessageDialog(frame,
+				"The selected file does not exist",
+				"Invalid File!", JOptionPane.ERROR_MESSAGE);
 	}
 
 }
