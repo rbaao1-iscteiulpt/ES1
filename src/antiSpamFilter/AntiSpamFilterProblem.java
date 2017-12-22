@@ -16,21 +16,18 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	
 	private int nRules = 0;
 	private String rules_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf";
-	private String ham_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/ham.log";
-	private String spam_path = "AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/spam.log";
+	private String ham_path;
+	private String spam_path;
 	private ArrayList<String> rules;
 	private ArrayList<ArrayList<String>> ham_result;
 	private ArrayList<ArrayList<String>> spam_result;
 
 	public AntiSpamFilterProblem(int nRules, String rulesPath, String hamPath, String spamPath) {
-		this(nRules);
 		this.nRules=nRules;
 		this.rules_path=rulesPath;
 		this.ham_path=hamPath;
 		this.spam_path=spamPath;
-	}
-
-	public AntiSpamFilterProblem(Integer numberOfVariables) {
+		
 
 		try {
 			rules = Functions.get_rules(rules_path);
@@ -40,7 +37,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 			e.printStackTrace();
 		}
 
-		setNumberOfVariables(numberOfVariables);
+		setNumberOfVariables(nRules);
 		setNumberOfObjectives(2);
 		setName("AntiSpamFilterProblem");
 
