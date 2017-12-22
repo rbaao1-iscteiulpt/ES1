@@ -13,7 +13,7 @@ import org.junit.Test;
  * Several tests make use of a Thread.sleep() function to give Swing some time to update whatever values
  * it has to in order for the test to make sense. <p>
  * Do not instantiate this class if you don't know what you're doing!
- * @author pvmpa-iscteiulpt & afgos-iscteiulpt
+ * @author pvmpa-iscteiulpt, afgos-iscteiulpt
  *
  */
 public class InterfaceTest {
