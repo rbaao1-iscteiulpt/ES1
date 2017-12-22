@@ -4,7 +4,7 @@ O sprint decorreu sem incidentes, sendo que todas as tarefas propostas foram con
 Durante o sprint foi concluido:
 -Implementacao do GUI para configuracao automatica
 -Ajuste dos valores default do Anti-Spam Filter Automatic Configuration, nomeadamente na funcao evaluate()
--Testes JUnit relativos a implementacao do GUI para configuracao automática
+-Testes JUnit relativos a implementacao do GUI para configuracao automatica
 -Testes JUnit relativos a classe AntiSpamFilterAutomaticConfiguration
 -Testes JUnit relativos a classe AntiSpamFilterConfiguration
 -Escrita de JavaDoc para os testes JUnit relativos a implementacao do GUI para configuracao manual
@@ -19,6 +19,6 @@ Tanto o Rodrigo como a Susana ficarao encarregados de concluir os relatorios nec
 
 Em termos de processo, 
 Foram realizadas algumas reunioes ao longo do sprint mas nao tantas como desejado uma vez que devido ao trabalho exigido por outras unidades curriculares foi mais dificil conciliar todo o grupo, levando a uma maior distruibuicao de tarefas pelos membros do grupo ao inves de o grupo se juntar e trabalhar num unico dispositivo como ocorreu mais frequentemente no primeiro sprint.
-O trello não foi actualizado tao frequentemente uma vez que o trabalho foi feito em "mini-sprints" onde os elementos do grupo escolhiam uma card a desenvolviam toda de seguida, embora as tarefas deste sprint nao tenham sido tao trabalhosas como as do primeiro sprint.
+O trello nao foi actualizado tao frequentemente uma vez que o trabalho foi feito em "mini-sprints" onde os elementos do grupo escolhiam uma card a desenvolviam toda de seguida, embora as tarefas deste sprint nao tenham sido tao trabalhosas como as do primeiro sprint.
 Continuou a haver uma boa dinamica de equipa, e os elementos do grupo encontram-se motivados. 
 Relativamente aos aspectos a melhorar, o trello devia ter sido actualizado mais frequentemente.
