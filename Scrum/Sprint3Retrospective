@@ -1,0 +1,20 @@
+A reuniao teve uma duracao de 30 minutos uma vez que o sprint teve uma duracao de 1 semana. Toda a equipa participou na reuniao.
+O sprint decorreu sem incidentes, sendo que todas as tarefas propostas foram concluidas.
+
+Durante o sprint foi concluido:
+-Correcao de erros
+-Reorganizacao do codigo e respectivas pastas
+-Criacao de campos na interface para o path dos executaveis R e latex
+-Video de utilizacao do software
+-Code inspection report
+-Geracao graficos latex
+-Relatorio de cobertura dos testes
+-Geracao javadoc
+-Gerar diagramas de classes 
+-Gerar ficheiro hv.boxplot.eps
+
+A equipa encontra-se satisfeita com o trabalho que foi possivel obter e o projecto final. No geral, houve uma boa dinamica e organizacao de equipa.
+Em termos de processo, houve reunioes regulares uma vez que era necessario ligar todas as diferentes partes do projecto que os membros do grupo foram executando individualmente ao longo do segundo sprint.
+O grupo efectuou o trabalho todo junto, embora tenha trabalho por vezes apenas num unico computador.
+O trello foi actualizado frequentemente: nomeadamente o tempo de duracao de cada card, as checklists que cada uma possuia e ainda os commits do github associados.
+Foram ainda feitos commits regularmente.
