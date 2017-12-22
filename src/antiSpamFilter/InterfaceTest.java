@@ -199,7 +199,7 @@ public class InterfaceTest {
 			
 			Thread.sleep(1000);
 			
-			assertThat(testSubject.getHamPath().getText(), is(not("")));
+			assertThat(testSubject.getHamPath().getText(), is(""));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -241,7 +241,7 @@ public class InterfaceTest {
 			
 			Thread.sleep(1000);
 			
-			assertThat(testSubject.getSpamPath().getText(), is(not("")));
+			assertThat(testSubject.getSpamPath().getText(), is(""));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -265,9 +265,9 @@ public class InterfaceTest {
 			testSubject.changeHam();
 			testSubject.getGenerateButton().getActionListeners()[0].actionPerformed(null);
 			
-			Thread.sleep(1000);
-			assertEquals(testSubject.getaFalseNegField().getText(), "0");
-			assertEquals(testSubject.getaFalsePosField().getText(), "0");
+			Thread.sleep(20000);
+			assertNotEquals(testSubject.getaFalseNegField().getText(), "0");
+			assertNotEquals(testSubject.getaFalsePosField().getText(), "0");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
