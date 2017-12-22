@@ -680,7 +680,7 @@ public class Interface {
 					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
 							mRulesTextArea.getText().split("\n").length);
 					if (weightsD != null)
-						Functions.write_weights(rulesPath.getText(), weightsD);
+						Functions.write_weights_and_rules(rulesPath.getText(), mRulesTextArea.getText(), weightsD);
 				} catch (IOException e) {
 					fileNotFound();
 				}
@@ -902,7 +902,7 @@ public class Interface {
 					ArrayList<Double> weightsD = toDoubleValidWeights(weights,
 							aRulesTextArea.getText().split("\n").length);
 					if (weightsD != null){
-						Functions.write_weights("./AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", weightsD);
+						Functions.write_weights_and_rules("./AntiSpamConfigurationForBalancedProfessionalAndLeisureMailbox/rules.cf", aRulesTextArea.getText(),weightsD);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();

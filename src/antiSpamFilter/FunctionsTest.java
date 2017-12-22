@@ -70,6 +70,8 @@ public class FunctionsTest {
 	 */
 	@Test
 	public final void testWrite_weights() throws IOException {
+		String rules = "A\nB\nC\nD\n";
+		
 		ArrayList<String> expectedList = new ArrayList<String>();
 		expectedList.add("5.0");
 		expectedList.add("6.0");
@@ -82,7 +84,7 @@ public class FunctionsTest {
 		solutionList.add(7.0);
 		solutionList.add(8.0);
 
-		Functions.write_weights("jUnitTests/TestFiles/rules_write.cf", solutionList);
+		Functions.write_weights_and_rules("jUnitTests/TestFiles/rules_write.cf", rules, solutionList);
 		ArrayList<String> actualList = Functions.get_weights("jUnitTests/TestFiles/rules_write.cf");
 		assertEquals("failure - lists are not equal", expectedList, actualList);	
 	}

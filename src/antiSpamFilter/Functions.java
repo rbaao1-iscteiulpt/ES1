@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Functions {
@@ -76,7 +78,7 @@ public class Functions {
 		sc.close();		
 		return weights;
 	}
-
+	
 	/**
 	 * Writes in path (rules.cf) the new weights
 	 * 
@@ -84,29 +86,15 @@ public class Functions {
 	 * @param solution
 	 * @throws IOException
 	 */
-	public static void write_weights(String rules_path, ArrayList<Double> solution) throws IOException{
+	public static void write_weights_and_rules(String rules_path, String rulesString, ArrayList<Double> solution) throws IOException{
 
-		ArrayList<String> rules = new ArrayList<String>();
-
-		Scanner sc = new Scanner(new File(rules_path));
-		String line;
-		int count = 0;
-
-		while (sc.hasNextLine()) {
-			line = sc.nextLine();
-			System.out.println(line);
-			String [] temp = line.split(" ");
-			rules.add(temp[0] + " " + solution.get(count).toString());
-			count++;
-		}
-
-		sc.close();
-
+		List<String> myList = new ArrayList<String>(Arrays.asList(rulesString.split("\n")));
+		
 		// Writes the new weights on the file
 		PrintWriter pw = new PrintWriter(new FileWriter(rules_path));
+		for(int i=0; i<myList.size(); i++) {
+			pw.println(myList.get(i) + " " + solution.get(i).toString());
 
-		for (String rule : rules) {
-			pw.println(rule);
 		}
 
 		pw.close();		
