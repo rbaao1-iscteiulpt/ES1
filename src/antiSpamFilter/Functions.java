@@ -80,9 +80,10 @@ public class Functions {
 	}
 	
 	/**
-	 * Writes in path (rules.cf) the new weights
+	 * Writes in path rules_path the new weights and their rules
 	 * 
 	 * @param rules_path of rules.cf
+	 * @param rulesString
 	 * @param solution
 	 * @throws IOException
 	 */
