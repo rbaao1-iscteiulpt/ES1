@@ -52,6 +52,8 @@ public class Interface {
 	private JButton mSaveButton;
 	private JButton generateButton;
 	private JButton aSaveButton;
+	private boolean rScriptPathOK;
+	private boolean miktexPathOK;
 
 	/**
 	 * Create the application.
@@ -116,7 +118,7 @@ public class Interface {
 				});
 				mWeightTextArea.setEditable(true);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				fileNotFound();
 			}
 		}
 	}
@@ -135,7 +137,6 @@ public class Interface {
 			hamPath.setText("");
 			hamPathOk = false;
 		}
-
 	}
 
 	/**
@@ -153,7 +154,43 @@ public class Interface {
 			spamPathOk = false;
 		}
 	}
-
+	
+	/**
+	 * Changes the directory where miktex-texworks.exe should be in order to render Latex files with 
+	 * the automatic configuration module.
+	 */
+	protected String[] changeLatex(){
+		String[] results = new String[2];
+		JFileChooser jc = new JFileChooser();
+		
+		JOptionPane.showMessageDialog(frame, "Point the program towards RScript.exe, please.", "Automatic Generation Script 1/2", 
+				JOptionPane.INFORMATION_MESSAGE);
+		
+		int returnVal = jc.showOpenDialog(frame);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			results[0] = (jc.getSelectedFile().getAbsolutePath());
+			rScriptPathOK = true;
+		} else {
+			rScriptPathOK = false;
+		}
+		
+		jc = new JFileChooser();
+		
+		JOptionPane.showMessageDialog(frame, "Point the program towards miktex-texworks.exe, please.", "Automatic Generation Script 2/2", 
+				JOptionPane.INFORMATION_MESSAGE);
+		returnVal = jc.showOpenDialog(frame);
+		
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			results[1] = (jc.getSelectedFile().getAbsolutePath());
+			miktexPathOK = true;
+		} else {
+			miktexPathOK = false;
+		}
+		
+		return results;
+		
+	}
+	
 	/**
 	 * Check if both spam and ham path's are chosen. if not, returns an error
 	 * message.
@@ -223,11 +260,35 @@ public class Interface {
 	 * Evaluates solutions, called after pressing "generate" button
 	 */
 	private void automaticEvaluation() {
-		try {
-		String[] args = {rulesPath.getText(), hamPath.getText(), spamPath.getText()};
-		AntiSpamFilterAutomaticConfiguration.main(args);
-		} catch (IOException e) {
-			e.printStackTrace();
+		String[] latexPaths = changeLatex();
+		if (rScriptPathOK && miktexPathOK) {
+			try {
+				String[] args = { rulesPath.getText(), hamPath.getText(), spamPath.getText() };
+				AntiSpamFilterAutomaticConfiguration.main(args);
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run(){
+						try {
+							new ProcessBuilder(latexPaths[0],"HV.Boxplot.R")
+									.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\R")).start();
+							new ProcessBuilder(latexPaths[1],"AntiSpamStudy.tex")
+									.directory(new File("experimentBaseDirectory\\AntiSpamStudy\\latex")).start();
+							System.out.println("RScript/Latex generators are done!!");
+						} catch (IOException e) {
+							System.out.println("WARNING: RScript/Latex FAILURE");
+						}		
+					}
+				});
+
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+		else{
+			System.out.println("WARNING - user attempted to use the automatic module without latex/rscript??");
+			JOptionPane.showMessageDialog(frame,
+					"You must provide valid paths to the Latex/R generators!",
+					"Invalid parameters!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -579,7 +640,7 @@ public class Interface {
 									Functions.file_to_array(spamPath.getText()))).toString());
 						}
 					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						fileNotFound();
 					}
 				}
 			}
@@ -797,7 +858,7 @@ public class Interface {
 								aFalseNegativeField.setText(temp[1]);
 								
 							} catch (FileNotFoundException e) {
-								e.printStackTrace();
+								fileNotFound();
 							}
 							generateButton.setEnabled(true);	
 						}
@@ -1012,6 +1073,12 @@ public class Interface {
 	 */
 	public JButton getASaveButton() {
 		return aSaveButton;
+	}
+	
+	private void fileNotFound() {
+		JOptionPane.showMessageDialog(frame,
+				"The selected file does not exist",
+				"Invalid File!", JOptionPane.ERROR_MESSAGE);
 	}
 
 }
